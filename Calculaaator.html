@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tools & Resources - Right to Respect</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <style>
+        :root {
+            --primary: #1a5276;
+            --secondary: #2e86c1;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-main);
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+        
+        nav ul li a:hover {
+            opacity: 0.8;
+        }
+        
+        .hero {
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%231a5276" opacity="0.1"/><path d="M0 0L100 100" stroke="%231a5276" stroke-width="1" opacity="0.1"/></svg>');
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--dark);
+        }
+        
+        .language-toggle {
+            text-align: center;
+            margin: 1rem 0;
+        }
+        
+        .lang-btn {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .lang-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .lang-btn:first-child {
+            border-radius: 4px 0 0 4px;
+        }
+        
+        .lang-btn:last-child {
+            border-radius: 0 4px 4px 0;
+            border-left: none;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin: 2rem 0;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--secondary);
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .tool-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .tool-card-header {
+            background: var(--primary);
+            color: white;
+            padding: 1.2rem;
+            text-align: center;
+        }
+        
+        .tool-card-body {
+            padding: 1.5rem;
+        }
+        
+        .tool-card-footer {
+            padding: 1rem 1.5rem;
+            background: #f5f5f5;
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--secondary);
+        }
+        
+        .resources-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
+        }
+        
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .resource-item {
+            background: #f9f9f9;
+            padding: 1.2rem;
+            border-radius: 6px;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .form-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            display: none;
+        }
+        
+        .form-active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(46, 134, 193, 0.2);
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">Right to Respect</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="resources.html" class="active">Resources</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Interactive Tools & Resources</h1>
+            <p>Empowering you with tools to protect your rights and file complaints against harassment by recovery agents</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="language-toggle">
+            <button class="lang-btn active" id="lang-en">English</button>
+            <button class="lang-btn" id="lang-hi">हिंदी</button>
+        </div>
+
+        <h2 class="section-title">Document Generators</h2>
+        
+        <div class="tools-grid">
+            <div class="tool-card">
+                <div class="tool-card-header">
+                    <h3>Bank Complaint Letter</h3>
+                </div>
+                <div class="tool-card-body">
+                    <p>Generate a formal complaint letter to your bank regarding harassment by recovery agents. Based on RBI guidelines.</p>
+                </div>
+                <div class="tool-card-footer">
+                    <button class="btn btn-primary" onclick="showForm('bank-complaint')">Generate Document</button>
+                </div>
+            </div>
+            
+            <div class="tool-card">
+                <div class="tool-card-header">
+                    <h3>RBI Ombudsman Complaint</h3>
+                </div>
+                <div class="tool-card-body">
+                    <p>File a complaint with the Banking Ombudsman when the bank doesn't resolve your grievance satisfactorily.</p>
+                </div>
+                <div class="tool-card-footer">
+                    <button class="btn btn-primary" onclick="showForm('rbi-ombudsman')">Generate Document</button>
+                </div>
+            </div>
+            
+            <div class="tool-card">
+                <div class="tool-card-header">
+                    <h3>Police Complaint</h3>
+                </div>
+                <div class="tool-card-body">
+                    <p>Create a formal harassment complaint to be submitted to your local police station with relevant legal sections.</p>
+                </div>
+                <div class="tool-card-footer">
+                    <button class="btn btn-primary" onclick="showForm('police-complaint')">Generate Document</button>
+                </div>
+            </div>
+            
+            <div class="tool-card">
+                <div class="tool-card-header">
+                    <h3>Recovery Agency Warning</h3>
+                </div>
+                <div class="tool-card-body">
+                    <p>Generate a formal warning letter to recovery agencies citing legal limitations on their actions.</p>
+                </div>
+                <div class="tool-card-footer">
+                    <button class="btn btn-primary" onclick="showForm('recovery-warning')">Generate Document</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bank Complaint Form -->
+        <div id="bank-complaint-form" class="form-container">
+            <h3>Bank Complaint Letter Generator</h3>
+            <form id="bankComplaintForm">
+                <div class="form-group">
+                    <label for="fullName">Your Full Name</label>
+                    <input type="text" id="fullName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="bankName">Bank Name</label>
+                    <input type="text" id="bankName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="branchName">Branch Name</label>
+                    <input type="text" id="branchName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="accountNumber">Account Number</label>
+                    <input type="text" id="accountNumber" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="complaintDetails">Complaint Details</label>
+                    <textarea id="complaintDetails" class="form-control" rows="5" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="dateOfIncident">Date of Incident</label>
+                    <input type="date" id="dateOfIncident" class="form-control" required>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="generateBankComplaint()">Generate PDF</button>
+                <button type="button" class="btn" onclick="hideForms()">Cancel</button>
+            </form>
+        </div>
+
+        <!-- RBI Ombudsman Form -->
+        <div id="rbi-ombudsman-form" class="form-container">
+            <h3>RBI Ombudsman Complaint Generator</h3>
+            <form id="rbiOmbudsmanForm">
+                <div class="form-group">
+                    <label for="ombudsmanName">Your Full Name</label>
+                    <input type="text" id="ombudsmanName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="ombudsmanAddress">Your Address</label>
+                    <textarea id="ombudsmanAddress" class="form-control" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="ombudsmanBank">Bank Name</label>
+                    <input type="text" id="ombudsmanBank" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="ombudsmanBranch">Bank Branch</label>
+                    <input type="text" id="ombudsmanBranch" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="ombudsmanComplaint">Complaint Details</label>
+                    <textarea id="ombudsmanComplaint" class="form-control" rows="5" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="ombudsmanRelief">Relief Sought</label>
+                    <textarea id="ombudsmanRelief" class="form-control" rows="3" required></textarea>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="generateRbiOmbudsmanComplaint()">Generate PDF</button>
+                <button type="button" class="btn" onclick="hideForms()">Cancel</button>
+            </form>
+        </div>
+
+        <!-- Police Complaint Form -->
+        <div id="police-complaint-form" class="form-container">
+            <h3>Police Complaint Generator</h3>
+            <form id="policeComplaintForm">
+                <div class="form-group">
+                    <label for="complainantName">Your Full Name</label>
+                    <input type="text" id="complainantName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="complainantAddress">Your Address</label>
+                    <textarea id="complainantAddress" class="form-control" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="accusedName">Accused Name/Company</label>
+                    <input type="text" id="accusedName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="accusedAddress">Accused Address</label>
+                    <textarea id="accusedAddress" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="incidentDetails">Incident Details</label>
+                    <textarea id="incidentDetails" class="form-control" rows="5" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="incidentDate">Date of Incident</label>
+                    <input type="date" id="incidentDate" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="witnesses">Witnesses (if any)</label>
+                    <textarea id="witnesses" class="form-control" rows="3"></textarea>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="generatePoliceComplaint()">Generate PDF</button>
+                <button type="button" class="btn" onclick="hideForms()">Cancel</button>
+            </form>
+        </div>
+
+        <!-- Recovery Warning Form -->
+        <div id="recovery-warning-form" class="form-container">
+            <h3>Recovery Agency Warning Letter Generator</h3>
+            <form id="recoveryWarningForm">
+                <div class="form-group">
+                    <label for="debtorName">Your Full Name</label>
+                    <input type="text" id="debtorName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="debtorAddress">Your Address</label>
+                    <textarea id="debtorAddress" class="form-control" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="agencyName">Recovery Agency Name</label>
+                    <input type="text" id="agencyName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="agencyAddress">Agency Address</label>
+                    <textarea id="agencyAddress" class="form-control" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="harassmentDetails">Harassment Details</label>
+                    <textarea id="harassmentDetails" class="form-control" rows="5" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="harassmentDate">Date of Latest Incident</label>
+                    <input type="date" id="harassmentDate" class="form-control" required>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="generateRecoveryWarning()">Generate PDF</button>
+                <button type="button" class="btn" onclick="hideForms()">Cancel</button>
+            </form>
+        </div>
+
+        <div class="resources-section">
+            <h2 class="section-title">Resources Library</h2>
+            <div class="resources-grid">
+                <div class="resource-item">
+                    <h4>RBI Guidelines Summary</h4>
+                    <p>Key regulations that recovery agents must follow</p>
+                    <a href="#" class="btn btn-primary">Download (PDF)</a>
+                </div>
+                <div class="resource-item">
+                    <h4>Banking Ombudsman Contacts</h4>
+                    <p>Contact information for all regional offices</p>
+                    <a href="#" class="btn btn-primary">View Details</a>
+                </div>
+                <div class="resource-item">
+                    <h4>Legal Aid Information</h4>
+                    <p>Organizations that provide free legal assistance</p>
+                    <a href="#" class="btn btn-primary">Learn More</a>
+                </div>
+                <div class="resource-item">
+                    <h4>Emergency Helplines</h4>
+                    <p>Immediate assistance for harassment cases</p>
+                    <a href="#" class="btn btn-primary">View Contacts</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="resources-section">
+            <h2 class="section-title">Rights Information Guide</h2>
+            <div class="guide-content">
+                <h3>What Recovery Agents Can and Cannot Do</h3>
+                <p>Recovery agents must follow strict guidelines as per RBI regulations and Supreme Court directives:</p>
+                <ul>
+                    <li>They cannot use physical force or threaten you</li>
+                    <li>They cannot use abusive language or make offensive gestures</li>
+                    <li>They cannot contact you outside of permissible hours (7am to 7pm)</li>
+                    <li>They cannot publicly humiliate you or disclose your debt to others</li>
+                    <li>They cannot pretend to be government officials</li>
+                </ul>
+                
+                <h3>Your Rights as a Borrower</h3>
+                <p>You have specific rights when dealing with recovery agents:</p>
+                <ul>
+                    <li>Right to be treated with dignity and respect</li>
+                    <li>Right to privacy regarding your financial matters</li>
+                    <li>Right to file complaints against harassment</li>
+                    <li>Right to legal representation</li>
+                    <li>Right to be informed about your debt accurately</li>
+                </ul>
+                
+                <h3>Complaint Filing Process</h3>
+                <p>If you experience harassment, follow these steps:</p>
+                <ol>
+                    <li>Document all incidents with dates, times, and details</li>
+                    <li>File a formal complaint with your bank first</li>
+                    <li>If unresolved within 30 days, escalate to Banking Ombudsman</li>
+                    <li>For criminal harassment, file a police complaint</li>
+                    <li>Consider legal action if harassment continues</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="logo">Right to Respect</div>
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Use</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <p>&copy; 2023 Right to Respect. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Language toggle functionality
+        document.getElementById('lang-en').addEventListener('click', function() {
+            setLanguage('en');
+        });
+        
+        document.getElementById('lang-hi').addEventListener('click', function() {
+            setLanguage('hi');
+        });
+        
+        function setLanguage(lang) {
+            const enBtn = document.getElementById('lang-en');
+            const hiBtn = document.getElementById('lang-hi');
+            
+            if (lang === 'en') {
+                enBtn.classList.add('active');
+                hiBtn.classList.remove('active');
+                // Additional logic to change content to English
+                document.documentElement.lang = 'en';
+                updateUIText(enText);
+            } else {
+                hiBtn.classList.add('active');
+                enBtn.classList.remove('active');
+                // Additional logic to change content to Hindi
+                document.documentElement.lang = 'hi';
+                updateUIText(hiText);
+            }
+        }
+        
+        // UI text in different languages
+        const enText = {
+            title: "Interactive Tools & Resources",
+            heroText: "Empowering you with tools to protect your rights and file complaints against harassment by recovery agents",
+            bankComplaint: "Bank Complaint Letter",
+            rbiComplaint: "RBI Ombudsman Complaint",
+            policeComplaint: "Police Complaint",
+            recoveryWarning: "Recovery Agency Warning",
+            resourcesTitle: "Resources Library",
+            rightsTitle: "Rights Information Guide"
+        };
+        
+        const hiText = {
+            title: "इंटरएक्टिव टूल्स और संसाधन",
+            heroText: "पुनर्प्राप्ति एजेंटों द्वारा उत्पीड़न के खिलाफ अपने अधिकारों की रक्षा और शिकायत दर्ज करने के लिए टूल्स के साथ आपको सशक्त बनाना",
+            bankComplaint: "बैंक शिकायत पत्र",
+            rbiComplaint: "आरबीआई ओम्बड्समैन शिकायत",
+            policeComplaint: "पुलिस शिकायत",
+            recoveryWarning: "पुनर्प्राप्ति एजेंसी चेतावनी",
+            resourcesTitle: "संसाधन लाइब्रेरी",
+            rightsTitle: "अधिकार सूचना गाइड"
+        };
+        
+        function updateUIText(textObj) {
+            document.querySelector('.hero h1').textContent = textObj.title;
+            document.querySelector('.hero p').textContent = textObj.heroText;
+            document.querySelectorAll('.tool-card-header h3')[0].textContent = textObj.bankComplaint;
+            document.querySelectorAll('.tool-card-header h3')[1].textContent = textObj.rbiComplaint;
+            document.querySelectorAll('.tool-card-header h3')[2].textContent = textObj.policeComplaint;
+            document.querySelectorAll('.tool-card-header h3')[3].textContent = textObj.recoveryWarning;
+            document.querySelectorAll('.section-title')[1].textContent = textObj.resourcesTitle;
+            document.querySelectorAll('.section-title')[2].textContent = textObj.rightsTitle;
+        }
+        
+        // Form display functionality
+        function showForm(formId) {
+            // Hide all forms first
+            const forms = document.querySelectorAll('.form-container');
+            forms.forEach(form => {
+                form.classList.remove('form-active');
+            });
+            
+            // Show the requested form
+            document.getElementById(`${formId}-form`).classList.add('form-active');
+            
+            // Scroll to the form
+            document.getElementById(`${formId}-form`).scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function hideForms() {
+            const forms = document.querySelectorAll('.form-container');
+            forms.forEach(form => {
+                form.classList.remove('form-active');
+            });
+        }
+        
+        // PDF Generation Functions
+        function generateBankComplaint() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Get form values
+            const fullName = document.getElementById('fullName').value;
+            const bankName = document.getElementById('bankName').value;
+            const branchName = document.getElementById('branchName').value;
+            const accountNumber = document.getElementById('accountNumber').value;
+            const complaintDetails = document.getElementById('complaintDetails').value;
+            const dateOfIncident = document.getElementById('dateOfIncident').value;
+            
+            // Format date
+            const incidentDate = new Date(dateOfIncident);
+            const formattedDate = incidentDate.toLocaleDateString('en-IN');
+            
+            // Add content to PDF
+            doc.setFontSize(16);
+            doc.text("FORMAL COMPLAINT AGAINT HARASSMENT BY RECOVERY AGENTS", 105, 20, { align: 'center' });
+            
+            doc.setFontSize(12);
+            doc.text(`Date: ${new Date().toLocaleDateString('en-IN')}`, 20, 40);
+            doc.text(`To,`, 20, 50);
+            doc.text(`The Branch Manager`, 20, 60);
+            doc.text(`${bankName}`, 20, 70);
+            doc.text(`${branchName}`, 20, 80);
+            
+            doc.text(`Subject: Complaint regarding harassment by recovery agents`, 20, 100);
+            
+            doc.text(`Dear Sir/Madam,`, 20, 120);
+            
+            let yPosition = 130;
+            const lineHeight = 7;
+            const maxWidth = 170;
+            
+            // Add complaint text
+            const complaintText = [
+                `I, ${fullName}, hold an account with your bank (Account No: ${accountNumber}).`,
+                ``,
+                `I am writing to bring to your attention the harassment I have been facing from the recovery agents appointed by your bank.`,
+                ``,
+                `On ${formattedDate}, I experienced the following inappropriate behavior:`,
+                `${complaintDetails}`,
+                ``,
+                `This behavior violates the RBI guidelines on fair practices for recovery agents. I request you to:`,
+                `1. Immediately stop this harassment`,
+                `2. Take appropriate action against the recovery agents involved`,
+                `3. Provide me with a written apology`,
+                `4. Ensure such incidents do not recur`,
+                ``,
+                `If this matter is not resolved within 15 days, I will be compelled to approach the Banking Ombudsman and other appropriate authorities.`,
+                ``,
+                `I expect your prompt action in this matter.`,
+                ``,
+                `Thank you for your attention.`,
+                ``,
+                `Sincerely,`,
+                `${fullName}`,
+                `Account Number: ${accountNumber}`
+            ];
+            
+            complaintText.forEach(line => {
+                if (yPosition > 270) {
+                    doc.addPage();
+                    yPosition = 20;
+                }
+                doc.text(line, 20, yPosition, { maxWidth });
+                yPosition += lineHeight * (doc.getTextDimensions(line).w / maxWidth > 1 ? 2 : 1);
+            });
+            
+            // Save the PDF
+            doc.save(`Bank-Complaint-${fullName.replace(/\s+/g, '-')}.pdf`);
+            
+            // Hide the form after generation
+            hideForms();
+        }
+        
+        function generateRbiOmbudsmanComplaint() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Get form values
+            const name = document.getElementById('ombudsmanName').value;
+            const address = document.getElementById('ombudsmanAddress').value;
+            const bank = document.getElementById('ombudsmanBank').value;
+            const branch = document.getElementById('ombudsmanBranch').value;
+            const complaint = document.getElementById('ombudsmanComplaint').value;
+            const relief = document.getElementById('ombudsmanRelief').value;
+            
+            // Add content to PDF
+            doc.setFontSize(16);
+            doc.text("COMPLAINT TO RBI BANKING OMBUDSMAN", 105, 20, { align: 'center' });
+            
+            doc.setFontSize(12);
+            doc.text(`Date: ${new Date().toLocaleDateString('en-IN')}`, 20, 40);
+            doc.text(`To,`, 20, 50);
+            doc.text(`The Banking Ombudsman`, 20, 60);
+            doc.text(`Reserve Bank of India`, 20, 70);
+            
+            doc.text(`Subject: Complaint against ${bank} for harassment by recovery agents`, 20, 90);
+            
+            doc.text(`Dear Sir/Madam,`, 20, 110);
+            
+            let yPosition = 130;
+            const lineHeight = 7;
+            const maxWidth = 170;
+            
+            // Add complaint text
+            const complaintText = [
+                `I, ${name}, residing at ${address}, am a customer of ${bank}, ${branch} branch.`,
+                ``,
+                `I wish to lodge a formal complaint against the bank for the harassment faced from their recovery agents.`,
+                ``,
+                `Details of my complaint:`,
+                `${complaint}`,
+                ``,
+                `I had previously approached the bank regarding this matter on [date] but did not receive a satisfactory response.`,
+                ``,
+                `The relief I seek is:`,
+                `${relief}`,
+                ``,
+                `I have attached all relevant documents supporting my complaint.`,
+                ``,
+                `I request your office to investigate this matter and provide appropriate relief as per the Banking Ombudsman Scheme.`,
+                ``,
+                `Thank you for your attention to this matter.`,
+                ``,
+                `Sincerely,`,
+                `${name}`,
+                `Address: ${address}`
+            ];
+            
+            complaintText.forEach(line => {
+                if (yPosition > 270) {
+                    doc.addPage();
+                    yPosition = 20;
+                }
+                doc.text(line, 20, yPosition, { maxWidth });
+                yPosition += lineHeight * (doc.getTextDimensions(line).w / maxWidth > 1 ? 2 : 1);
+            });
+            
+            // Save the PDF
+            doc.save(`RBI-Ombudsman-Complaint-${name.replace(/\s+/g, '-')}.pdf`);
+            
+            // Hide the form after generation
+            hideForms();
+        }
+        
+        function generatePoliceComplaint() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Get form values
+            const name = document.getElementById('complainantName').value;
+            const address = document.getElementById('complainantAddress').value;
+            const accused = document.getElementById('accusedName').value;
+            const accusedAddress = document.getElementById('accusedAddress').value;
+            const incident = document.getElementById('incidentDetails').value;
+            const date = document.getElementById('incidentDate').value;
+            const witnesses = document.getElementById('witnesses').value;
+            
+            // Format date
+            const incidentDate = new Date(date);
+            const formattedDate = incidentDate.toLocaleDateString('en-IN');
+            
+            // Add content to PDF
+            doc.setFontSize(16);
+            doc.text("POLICE COMPLAINT REGARDING HARASSMENT", 105, 20, { align: 'center' });
+            
+            doc.setFontSize(12);
+            doc.text(`Date: ${new Date().toLocaleDateString('en-IN')}`, 20, 40);
+            doc.text(`To,`, 20, 50);
+            doc.text(`The Station House Officer`, 20, 60);
+            doc.text(`[Police Station Name]`, 20, 70);
+            doc.text(`[Police Station Address]`, 20, 80);
+            
+            doc.text(`Subject: Complaint against ${accused} for harassment and intimidation`, 20, 100);
+            
+            doc.text(`Dear Sir/Madam,`, 20, 120);
+            
+            let yPosition = 140;
+            const lineHeight = 7;
+            const maxWidth = 170;
+            
+            // Add complaint text
+            const complaintText = [
+                `I, ${name}, residing at ${address}, hereby file a complaint against ${accused} (${accusedAddress}) for harassment and intimidation.`,
+                ``,
+                `On ${formattedDate}, the following incident occurred:`,
+                `${incident}`,
+                ``,
+                `This behavior amounts to criminal intimidation, harassment, and breach of peace under relevant sections of Indian Penal Code.`,
+                ``,
+                `I fear for my safety and the safety of my family members due to these actions.`,
+                ``,
+                `Witnesses to the incident: ${witnesses || 'None'}`,
+                ``,
+                `I request you to register an FIR against the accused and take appropriate legal action.`,
+                ``,
+                `I am available to provide any additional information or cooperate in the investigation.`,
+                ``,
+                `Thank you for your attention to this matter.`,
+                ``,
+                `Sincerely,`,
+                `${name}`,
+                `Address: ${address}`,
+                `Contact: [Your Phone Number]`
+            ];
+            
+            complaintText.forEach(line => {
+                if (yPosition > 270) {
+                    doc.addPage();
+                    yPosition = 20;
+                }
+                doc.text(line, 20, yPosition, { maxWidth });
+                yPosition += lineHeight * (doc.getTextDimensions(line).w / maxWidth > 1 ? 2 : 1);
+            });
+            
+            // Save the PDF
+            doc.save(`Police-Complaint-${name.replace(/\s+/g, '-')}.pdf`);
+            
+            // Hide the form after generation
+            hideForms();
+        }
+        
+        function generateRecoveryWarning() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Get form values
+            const name = document.getElementById('debtorName').value;
+            const address = document.getElementById('debtorAddress').value;
+            const agency = document.getElementById('agencyName').value;
+            const agencyAddress = document.getElementById('agencyAddress').value;
+            const details = document.getElementById('harassmentDetails').value;
+            const date = document.getElementById('harassmentDate').value;
+            
+            // Format date
+            const incidentDate = new Date(date);
+            const formattedDate = incidentDate.toLocaleDateString('en-IN');
+            
+            // Add content to PDF
+            doc.setFontSize(16);
+            doc.text("LEGAL NOTICE TO RECOVERY AGENCY", 105, 20, { align: 'center' });
+            
+            doc.setFontSize(12);
+            doc.text(`Date: ${new Date().toLocaleDateString('en-IN')}`, 20, 40);
+            doc.text(`To,`, 20, 50);
+            doc.text(`The Manager`, 20, 60);
+            doc.text(`${agency}`, 20, 70);
+            doc.text(`${agencyAddress}`, 20, 80);
+            
+            doc.text(`Subject: Cease and desist notice regarding harassment for debt recovery`, 20, 100);
+            
+            doc.text(`Dear Sir/Madam,`, 20, 120);
+            
+            let yPosition = 140;
+            const lineHeight = 7;
+            const maxWidth = 170;
+            
+            // Add complaint text
+            const noticeText = [
+                `I, ${name}, residing at ${address}, am writing to bring to your attention the unlawful harassment I have been facing from your recovery agents.`,
+                ``,
+                `On ${formattedDate}, your agents engaged in the following inappropriate behavior:`,
+                `${details}`,
+                ``,
+                `This behavior violates the guidelines issued by the Reserve Bank of India and the Supreme Court of India regarding fair practices in debt recovery.`,
+                ``,
+                `Specifically, your agents have violated the following provisions:`,
+                `1. Using threatening and abusive language`,
+                `2. Harassing me at odd hours`,
+                `3. [Add other specific violations]`,
+                ``,
+                `I demand that you immediately:`,
+                `1. Cease all harassment and unlawful recovery practices`,
+                `2. Withdraw your agents from contacting me except through lawful means`,
+                `3. Provide written assurance that such practices will not recur`,
+                ``,
+                `If the harassment does not stop immediately, I will not hesitate to take legal action against your agency, including filing complaints with the Banking Ombudsman, RBI, and local police authorities.`,
+                ``,
+                `I reserve all my legal rights and remedies in this matter.`,
+                ``,
+                `Sincerely,`,
+                `${name}`,
+                `Address: ${address}`
+            ];
+            
+            noticeText.forEach(line => {
+                if (yPosition > 270) {
+                    doc.addPage();
+                    yPosition = 20;
+                }
+                doc.text(line, 20, yPosition, { maxWidth });
+                yPosition += lineHeight * (doc.getTextDimensions(line).w / maxWidth > 1 ? 2 : 1);
+            });
+            
+            // Save the PDF
+            doc.save(`Recovery-Warning-${agency.replace(/\s+/g, '-')}.pdf`);
+            
+            // Hide the form after generation
+            hideForms();
+        }
+    </script>
+</body>
+</html>

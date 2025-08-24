@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RightToRespect.info - Professional Email Harassment Complaint Generator</title>
+    <meta name="description" content="Generate professional complaint letters against email harassment. Create legal documents, assert your rights, fight back professionally with our comprehensive complaint generation tools.">
+    
+    <!-- Performance Optimization -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #3730a3;
+            --secondary: #ef4444;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --surface: #ffffff;
+            --surface-dark: #f8fafc;
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --border: #e5e7eb;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--surface-dark);
+            overflow-x: hidden;
+        }
+
+        /* Accessibility Focus Styles */
+        *:focus {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        /* Header */
+        .header {
+            background: var(--gradient);
+            color: white;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-content {
+            text-align: center;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .site-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .main-heading {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ffffff, #e0e7ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .hindi-subtitle {
+            font-size: 1rem;
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        /* Emergency Banner */
+        .emergency-banner {
+            background: var(--secondary);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-weight: 600;
+            animation: pulse 2s ease-in-out infinite;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .emergency-banner .icon {
+            margin-right: 0.5rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            background: var(--surface);
+            border-radius: 20px;
+            margin: -3rem 1rem 2rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Form Sections */
+        .form-section {
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .form-section:nth-child(2) { animation-delay: 0.1s; }
+        .form-section:nth-child(3) { animation-delay: 0.2s; }
+        .form-section:nth-child(4) { animation-delay: 0.3s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: var(--surface);
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(239, 68, 68, 0.4);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Action Buttons Grid */
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .action-card {
+            background: var(--surface-dark);
+            border: 2px solid var(--border);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .action-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .action-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Output Section */
+        .output-section {
+            background: var(--surface-dark);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-left: 4px solid var(--primary);
+        }
+
+        .output-content {
+            background: var(--surface);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        /* Status Messages */
+        .status-message {
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .status-success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        .status-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+
+        .status-warning {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fde68a;
+        }
+
+        /* Console */
+        .console {
+            background: #1f2937;
+            color: #10b981;
+            border-radius: 10px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            height: 200px;
+            overflow-y: auto;
+            margin: 1rem 0;
+        }
+
+        .console-line {
+            margin: 0.25rem 0;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .console-success { color: #10b981; }
+        .console-error { color: #ef4444; }
+        .console-warning { color: #f59e0b; }
+        .console-info { color: #3b82f6; }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-heading {
+                font-size: 2rem;
+            }
+            
+            .site-title {
+                font-size: 2rem;
+            }
+            
+            .action-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-content {
+                margin: -2rem 0.5rem 1rem;
+                padding: 1.5rem;
+            }
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Accessibility Improvements */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* High Contrast Mode */
+        @media (prefers-contrast: high) {
+            :root {
+                --border: #000000;
+                --text: #000000;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Emergency Banner -->
+    <div class="emergency-banner" role="banner">
+        <span class="icon" aria-hidden="true">🚨</span>
+        <strong>Emergency Help Available 24/7</strong> - 
+        If facing immediate threats: Police: <a href="tel:100" style="color: white; text-decoration: underline;">100</a> | 
+        Women Helpline: <a href="tel:181" style="color: white; text-decoration: underline;">181</a> | 
+        Cyber Crime: <a href="tel:1930" style="color: white; text-decoration: underline;">1930</a>
+    </div>
+
+    <!-- Header -->
+    <header class="header" role="banner">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="site-title">RightToRespect.info</h1>
+                <h2 class="main-heading">Professional Email Harassment Complaint Generator</h2>
+                <p class="subtitle">Generate formal complaint letters, assert your legal rights, document harassment professionally</p>
+                <p class="hindi-subtitle">ईमेल उत्पीड़न के खिलाफ कानूनी शिकायत पत्र जेनरेटर</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="main-content">
+            <!-- Console Output -->
+            <div class="console" id="console" role="log" aria-label="System Status Console">
+                <div class="console-line console-success">✓ Professional complaint generation system ready</div>
+                <div class="console-line console-info">📝 RightToRespect.info - Email Harassment Complaint Generator Loaded Successfully</div>
+                <div class="console-line console-warning">🔄 Initializing Legal Document Generation Engine</div>
+                <div class="console-line console-success">✓ Complaint generator initialized successfully</div>
+            </div>
+
+            <!-- Status Messages -->
+            <div id="statusMessages" aria-live="polite"></div>
+
+            <!-- Harassment Type Selection -->
+            <section class="form-section">
+                <h2 class="section-title">
+                    <span aria-hidden="true">🎯</span>
+                    Type of Harassment
+                </h2>
+                <div class="action-grid" role="group" aria-labelledby="harassment-types">
+                    <div class="action-card" tabindex="0" role="button" data-type="spam" aria-describedby="spam-desc">
+                        <div class="action-icon">📧</div>
+                        <h3>Spam/Unwanted Emails</h3>
+                        <p id="spam-desc">Continuous unwanted promotional or personal emails</p>
+                    </div>
+                    <div class="action-card" tabindex="0" role="button" data-type="threats" aria-describedby="threats-desc">
+                        <div class="action-icon">⚠️</div>
+                        <h3>Threatening Messages</h3>
+                        <p id="threats-desc">Emails containing threats or intimidation</p>
+                    </div>
+                    <div class="action-card" tabindex="0" role="button" data-type="identity" aria-describedby="identity-desc">
+                        <div class="action-icon">🕵️</div>
+                        <h3>Identity Misuse</h3>
+                        <p id="identity-desc">Someone using your email identity fraudulently</p>
+                    </div>
+                    <div class="action-card" tabindex="0" role="button" data-type="workplace" aria-describedby="workplace-desc">
+                        <div class="action-icon">🏢</div>
+                        <h3>Workplace Harassment</h3>
+                        <p id="workplace-desc">Professional email harassment or bullying</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Complaint Form -->
+            <section class="form-section">
+                <h2 class="section-title">
+                    <span aria-hidden="true">📝</span>
+                    Professional Complaint Letter Generator
+                </h2>
+                
+                <div style="background: #f0f9ff; border: 1px solid #0ea5e9; border-radius: 10px; padding: 1.5rem; margin-bottom: 2rem;">
+                    <h3 style="color: #0369a1; margin-bottom: 1rem; font-size: 1.25rem;">🎯 What This Tool Does:</h3>
+                    <ul style="color: #075985; line-height: 1.8; margin-left: 1.5rem;">
+                        <li><strong>Generates Professional Complaint Letters</strong> - Creates formal, legally-sound complaint documents</li>
+                        <li><strong>Not an Email Client</strong> - This is a document generator, not an email sending service</li>
+                        <li><strong>Legal Documentation</strong> - Produces complaint letters you can submit to authorities, HR, or legal entities</li>
+                        <li><strong>Multiple Output Formats</strong> - Download as text file, copy to clipboard, or open in email client</li>
+                        <li><strong>Evidence-Based</strong> - Incorporates your evidence and incident details into formal complaints</li>
+                    </ul>
+                </div>
+                
+                <form id="harassmentForm" novalidate>
+                    <div class="form-group">
+                        <label for="fullName" class="form-label">Your Full Name *</label>
+                        <input type="text" id="fullName" class="form-input" required 
+                               aria-describedby="fullName-error" placeholder="Enter your full name">
+                        <div id="fullName-error" class="error-message" role="alert"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="form-label">Your Email Address *</label>
+                        <input type="email" id="email" class="form-input" required 
+                               aria-describedby="email-error" placeholder="your.email@example.com">
+                        <div id="email-error" class="error-message" role="alert"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="harasserEmail" class="form-label">Harasser's Email *</label>
+                        <input type="email" id="harasserEmail" class="form-input" required 
+                               aria-describedby="harasserEmail-error" placeholder="harasser@example.com">
+                        <div id="harasserEmail-error" class="error-message" role="alert"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="incidentDate" class="form-label">Date of Incident *</label>
+                        <input type="date" id="incidentDate" class="form-input" required 
+                               aria-describedby="incidentDate-error">
+                        <div id="incidentDate-error" class="error-message" role="alert"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description" class="form-label">Detailed Description *</label>
+                        <textarea id="description" class="form-textarea" required 
+                                  aria-describedby="description-error" 
+                                  placeholder="Describe the harassment incident in detail..."></textarea>
+                        <div id="description-error" class="error-message" role="alert"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="evidenceType" class="form-label">Evidence Available</label>
+                        <select id="evidenceType" class="form-select" aria-describedby="evidenceType-help">
+                            <option value="">Select evidence type</option>
+                            <option value="screenshots">Screenshots</option>
+                            <option value="forwarded-emails">Forwarded Emails</option>
+                            <option value="email-headers">Email Headers</option>
+                            <option value="witnesses">Witness Statements</option>
+                            <option value="multiple">Multiple Types</option>
+                        </select>
+                        <div id="evidenceType-help" class="help-text">Having evidence strengthens your complaint</div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <span aria-hidden="true">📄</span>
+                        Generate Professional Complaint Letter
+                        <span class="spinner" id="formSpinner" style="display: none;" aria-hidden="true"></span>
+                    </button>
+                </form>
+            </section>
+
+            <!-- Output Section -->
+            <section class="output-section" id="outputSection" style="display: none;">
+                <h2 class="section-title">
+                    <span aria-hidden="true">📋</span>
+                    Generated Professional Complaint Letter
+                </h2>
+                <div style="background: #fef3c7; border: 1px solid #f59e0b; border-radius: 10px; padding: 1rem; margin-bottom: 1rem;">
+                    <p style="color: #92400e; font-weight: 500; margin: 0;">
+                        📋 <strong>Usage Instructions:</strong> This is a formal complaint document. You can copy it, download it, or send it via your email client to the appropriate authorities (HR, police, legal departments, etc.).
+                    </p>
+                </div>
+                <div class="output-content" id="outputContent" role="region" aria-label="Generated complaint letter"></div>
+                <div style="margin-top: 1rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <button type="button" class="btn btn-success" id="copyBtn">
+                        <span aria-hidden="true">📋</span>
+                        Copy to Clipboard
+                    </button>
+                    <button type="button" class="btn btn-primary" id="downloadBtn">
+                        <span aria-hidden="true">💾</span>
+                        Download as Text
+                    </button>
+                    <button type="button" class="btn btn-secondary" id="emailBtn">
+                        <span aria-hidden="true">📧</span>
+                        Open in Email Client
+                    </button>
+                </div>
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="form-section">
+                <h2 class="section-title">
+                    <span aria-hidden="true">⚡</span>
+                    Quick Actions
+                </h2>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <button type="button" class="btn btn-secondary" id="blockInstructionsBtn">
+                        <span aria-hidden="true">🚫</span>
+                        Email Blocking Guide
+                    </button>
+                    <button type="button" class="btn btn-warning" id="reportGuideBtn">
+                        <span aria-hidden="true">📊</span>
+                        Reporting Guidelines
+                    </button>
+                    <button type="button" class="btn btn-primary" id="legalResourcesBtn">
+                        <span aria-hidden="true">⚖️</span>
+                        Legal Resources
+                    </button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Application State
+        let currentHarassmentType = '';
+        let generatedContent = '';
+        
+        // Console logging function
+        function logToConsole(message, type = 'info') {
+            const console = document.getElementById('console');
+            const line = document.createElement('div');
+            line.className = `console-line console-${type}`;
+            
+            const icons = {
+                success: '✓',
+                error: '✗',
+                warning: '⚠',
+                info: 'ℹ'
+            };
+            
+            line.textContent = `${icons[type]} ${message}`;
+            console.appendChild(line);
+            console.scrollTop = console.scrollHeight;
+            
+            // Limit console lines
+            const lines = console.querySelectorAll('.console-line');
+            if (lines.length > 20) {
+                lines[0].remove();
+            }
+        }
+
+        // Status message function
+        function showStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('statusMessages');
+            const statusElement = document.createElement('div');
+            statusElement.className = `status-message status-${type}`;
+            statusElement.textContent = message;
+            statusElement.style.display = 'block';
+            
+            statusDiv.appendChild(statusElement);
+            
+            setTimeout(() => {
+                statusElement.remove();
+            }, 5000);
+        }
+
+        // Form validation functions
+        function validateEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function validateRequired(value) {
+            return value.trim().length > 0;
+        }
+
+        function showFieldError(fieldId, message) {
+            const errorDiv = document.getElementById(`${fieldId}-error`);
+            if (errorDiv) {
+                errorDiv.textContent = message;
+                errorDiv.style.color = 'var(--secondary)';
+                errorDiv.style.fontSize = '0.875rem';
+                errorDiv.style.marginTop = '0.25rem';
+            }
+        }
+
+        function clearFieldError(fieldId) {
+            const errorDiv = document.getElementById(`${fieldId}-error`);
+            if (errorDiv) {
+                errorDiv.textContent = '';
+            }
+        }
+
+        function validateForm() {
+            let isValid = true;
+            const fields = [
+                { id: 'fullName', validator: validateRequired, message: 'Full name is required' },
+                { id: 'email', validator: validateEmail, message: 'Please enter a valid email address' },
+                { id: 'harasserEmail', validator: validateEmail, message: 'Please enter a valid harasser email' },
+                { id: 'incidentDate', validator: validateRequired, message: 'Incident date is required' },
+                { id: 'description', validator: validateRequired, message: 'Description is required' }
+            ];
+
+            fields.forEach(field => {
+                const element = document.getElementById(field.id);
+                const value = element.value;
+                
+                clearFieldError(field.id);
+                
+                if (!field.validator(value)) {
+                    showFieldError(field.id, field.message);
+                    isValid = false;
+                }
+            });
+
+            return isValid;
+        }
+
+        // Complaint letter generator
+        function generateComplaintLetter(formData) {
+            const templates = {
+                spam: `FORMAL COMPLAINT REGARDING UNSOLICITED EMAIL HARASSMENT
+
+To: [Relevant Authority/IT Department/ISP]
+From: ${formData.fullName}
+Email: ${formData.email}
+Date: ${new Date().toLocaleDateString()}
+
+SUBJECT: Formal Complaint Against Spam/Unwanted Email Harassment
+
+Dear Sir/Madam,
+
+I am writing to formally complaint about persistent unsolicited email harassment from ${formData.harasserEmail}. This harassment began on ${formData.incidentDate} and has continued despite my requests to stop.
+
+INCIDENT DETAILS:
+${formData.description}
+
+EVIDENCE:
+${formData.evidenceType ? `Evidence type: ${formData.evidenceType}` : 'Evidence documentation attached separately'}
+
+I request immediate action to:
+1. Block the sender's email address
+2. Investigate this matter thoroughly  
+3. Take appropriate disciplinary/legal action
+4. Provide written confirmation of actions taken
+
+This harassment violates:
+- IT Act 2000 (India) Section 66A
+- Personal Data Protection regulations
+- Email service provider terms of use
+
+I reserve the right to pursue further legal action if this matter is not resolved promptly.
+
+Thank you for your immediate attention to this serious matter.
+
+Sincerely,
+${formData.fullName}
+${formData.email}
+Date: ${new Date().toLocaleDateString()}`,
+
+                threats: `URGENT COMPLAINT REGARDING THREATENING EMAIL HARASSMENT
+
+To: [Police Cyber Crime Department/Legal Authority]
+From: ${formData.fullName}
+Email: ${formData.email}
+Date: ${new Date().toLocaleDateString()}
+
+SUBJECT: URGENT - Threatening Email Harassment Complaint
+
+Dear Officer/Sir/Madam,
+
+I am filing this formal complaint regarding serious threatening communications received via email from ${formData.harasserEmail}. The threats began on ${formData.incidentDate} and pose a credible risk to my safety and well-being.
+
+INCIDENT DETAILS:
+${formData.description}
+
+EVIDENCE AVAILABLE:
+${formData.evidenceType ? `Evidence type: ${formData.evidenceType}` : 'Complete evidence documentation ready for investigation'}
+
+IMMEDIATE ACTIONS REQUESTED:
+1. Register FIR under relevant sections
+2. Investigate the source and sender
+3. Issue restraining orders if necessary
+4. Provide police protection if threats escalate
+
+LEGAL PROVISIONS VIOLATED:
+- Indian Penal Code Section 503 (Criminal Intimidation)
+- Indian Penal Code Section 506 (Punishment for Criminal Intimidation)  
+- IT Act 2000 Section 66A (Offensive messages)
+- IT Act 2000 Section 67 (Publishing obscene content)
+
+I fear for my personal safety and request immediate intervention. I am available to provide additional evidence and cooperate fully with the investigation.
+
+URGENT ACTION REQUIRED.
+
+Respectfully,
+${formData.fullName}
+${formData.email}
+Contact: [Your Phone Number]
+Date: ${new Date().toLocaleDateString()}`,
+
+                identity: `COMPLAINT REGARDING EMAIL IDENTITY THEFT AND MISUSE
+
+To: [Cyber Crime Police/Email Service Provider]
+From: ${formData.fullName}  
+Email: ${formData.email}
+Date: ${new Date().toLocaleDateString()}
+
+SUBJECT: Identity Theft Complaint - Fraudulent Use of Email Identity
+
+Dear Sir/Madam,
+
+I am filing this formal complaint regarding the fraudulent misuse of my email identity. On ${formData.incidentDate}, I discovered that someone has been using my email identity fraudulently, connected to ${formData.harasserEmail}.
+
+INCIDENT DETAILS:
+${formData.description}
+
+FRAUDULENT ACTIVITIES OBSERVED:
+- Unauthorized use of my name/email identity
+- Sending messages that appear to be from me
+- Potential financial fraud or reputation damage
+- [Other specific fraudulent activities]
+
+EVIDENCE:
+${formData.evidenceType ? `Evidence type: ${formData.evidenceType}` : 'Complete digital evidence compiled for investigation'}
+
+IMMEDIATE ACTIONS REQUESTED:
+1. Investigate the source of identity theft
+2. Block fraudulent accounts/activities
+3. Restore my legitimate identity
+4. Take legal action against perpetrators
+
+LAWS VIOLATED:
+- IT Act 2000 Section 66C (Identity Theft)
+- IT Act 2000 Section 66D (Cheating by Personation using Computer)
+- Indian Penal Code Section 419 (Cheating by Personation)
+- Indian Penal Code Section 420 (Cheating)
+
+This identity theft has caused significant personal and professional damage. I request urgent investigation and remedial action.
+
+Sincerely,
+${formData.fullName}
+${formData.email}
+Date: ${new Date().toLocaleDateString()}`,
+
+                workplace: `FORMAL WORKPLACE EMAIL HARASSMENT COMPLAINT
+
+To: [HR Department/Management/Legal Department]
+From: ${formData.fullName}
+Employee ID: [Your Employee ID]
+Email: ${formData.email}
+Date: ${new Date().toLocaleDateString()}
+
+SUBJECT: Formal Complaint - Workplace Email Harassment
+
+Dear HR/Management,
+
+I am filing this formal complaint regarding workplace email harassment that I have been subjected to by ${formData.harasserEmail}. This harassment began on ${formData.incidentDate} and has created a hostile work environment.
+
+INCIDENT DETAILS:
+${formData.description}
+
+IMPACT ON WORK ENVIRONMENT:
+- Decreased productivity due to stress
+- Uncomfortable working atmosphere
+- Potential violation of company policies
+- Impact on professional relationships
+
+EVIDENCE:
+${formData.evidenceType ? `Evidence type: ${formData.evidenceType}` : 'Documentation attached for HR review'}
+
+ACTIONS REQUESTED:
+1. Immediate investigation of this complaint
+2. Disciplinary action against the harasser
+3. Implementation of preventive measures
+4. Written assurance of no retaliation
+5. Counseling/mediation if appropriate
+
+COMPANY POLICIES VIOLATED:
+- Workplace Harassment Policy
+- Professional Communication Guidelines
+- Code of Conduct
+- Equal Employment Opportunity Policy
+
+LEGAL REFERENCES:
+- Sexual Harassment of Women at Workplace Act 2013 (if applicable)
+- IT Act 2000 provisions on electronic harassment
+- Labor law provisions on workplace dignity
+
+I trust that the organization will take swift and appropriate action to resolve this matter and ensure a safe, harassment-free workplace for all employees.
+
+I am available for any meetings or discussions required for this investigation.
+
+Respectfully,
+${formData.fullName}
+Employee ID: [Your Employee ID]
+Department: [Your Department]
+Email: ${formData.email}
+Date: ${new Date().toLocaleDateString()}`
+            };
+
+            return templates[currentHarassmentType] || templates.spam;
+        }
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            logToConsole('RightToRespect.info Complaint Generator Started', 'success');
+            
+            // Harassment type selection
+            document.querySelectorAll('.action-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    // Remove active state from all cards
+                    document.querySelectorAll('.action-card').forEach(c => {
+                        c.style.borderColor = 'var(--border)';
+                        c.style.backgroundColor = 'var(--surface-dark)';
+                    });
+                    
+                    // Set active state
+                    this.style.borderColor = 'var(--primary)';
+                    this.style.backgroundColor = '#f0f0ff';
+                    
+                    currentHarassmentType = this.dataset.type;
+                    logToConsole(`Selected harassment type: ${currentHarassmentType}`, 'info');
+                    showStatus(`Selected: ${this.querySelector('h3').textContent}`, 'success');
+                });
+                
+                // Keyboard support
+                card.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        this.click();
+                    }
+                });
+            });
+
+            // Form submission
+            document.getElementById('harassmentForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (!currentHarassmentType) {
+                    showStatus('Please select a harassment type first', 'error');
+                    return;
+                }
+                
+                if (!validateForm()) {
+                    showStatus('Please correct the errors in the form', 'error');
+                    return;
+                }
+                
+                // Show loading
+                document.getElementById('formSpinner').style.display = 'inline-block';
+                logToConsole('Generating complaint letter...', 'info');
+                
+                // Simulate processing time
+                setTimeout(() => {
+                    const formData = {
+                        fullName: document.getElementById('fullName').value,
+                        email: document.getElementById('email').value,
+                        harasserEmail: document.getElementById('harasserEmail').value,
+                        incidentDate: new Date(document.getElementById('incidentDate').value).toLocaleDateString(),
+                        description: document.getElementById('description').value,
+                        evidenceType: document.getElementById('evidenceType').value
+                    };
+                    
+                    generatedContent = generateComplaintLetter(formData);
+                    
+                    document.getElementById('outputContent').textContent = generatedContent;
+                    document.getElementById('outputSection').style.display = 'block';
+                    document.getElementById('formSpinner').style.display = 'none';
+                    
+                    logToConsole('Complaint letter generated successfully', 'success');
+                    showStatus('Complaint letter generated successfully!', 'success');
+                    
+                    // Scroll to output
+                    document.getElementById('outputSection').scrollIntoView({ 
+                        behavior: 'smooth' 
+                    });
+                }, 1500);
+            });
+
+            // Copy to clipboard
+            document.getElementById('copyBtn').addEventListener('click', async function() {
+                try {
+                    await navigator.clipboard.writeText(generatedContent);
+                    showStatus('Copied to clipboard!', 'success');
+                    logToConsole('Content copied to clipboard', 'success');
+                } catch (err) {
+                    // Fallback for older browsers
+                    const textArea = document.createElement('textarea');
+                    textArea.value = generatedContent;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    showStatus('Copied to clipboard!', 'success');
+                }
+            });
+
+            // Download as text file
+            document.getElementById('downloadBtn').addEventListener('click', function() {
+                const blob = new Blob([generatedContent], { type: 'text/plain' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `complaint_letter_${new Date().toISOString().split('T')[0]}.txt`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+                
+                logToConsole('Complaint letter downloaded', 'success');
+                showStatus('File downloaded successfully!', 'success');
+            });
+
+            // Send via email
+            document.getElementById('emailBtn').addEventListener('click', function() {
+                const subject = encodeURIComponent('Email Harassment Complaint Letter');
+                const body = encodeURIComponent(generatedContent);
+                const mailtoLink = `mailto:?subject=${subject}&body=${body}`;
+                
+                window.open(mailtoLink);
+                logToConsole('Email client opened with complaint letter', 'info');
+                showStatus('Email client opened - you can now send the complaint letter', 'info');
+            });
+
+            // Quick action buttons
+            document.getElementById('blockInstructionsBtn').addEventListener('click', function() {
+                showEmailBlockingGuide();
+            });
+
+            document.getElementById('reportGuideBtn').addEventListener('click', function() {
+                showReportingGuide();
+            });
+
+            document.getElementById('legalResourcesBtn').addEventListener('click', function() {
+                showLegalResources();
+            });
+
+            // Real-time form validation
+            const formFields = ['fullName', 'email', 'harasserEmail', 'incidentDate', 'description'];
+            formFields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                field.addEventListener('blur', function() {
+                    const value = this.value;
+                    clearFieldError(fieldId);
+                    
+                    if (fieldId === 'email' || fieldId === 'harasserEmail') {
+                        if (value && !validateEmail(value)) {
+                            showFieldError(fieldId, 'Please enter a valid email address');
+                        }
+                    } else if (value && !validateRequired(value)) {
+                        showFieldError(fieldId, 'This field is required');
+                    }
+                });
+            });
+
+            logToConsole('All event listeners initialized', 'success');
+        });
+
+        // Quick action functions
+        function showEmailBlockingGuide() {
+            const guide = `EMAIL BLOCKING GUIDE
+
+HOW TO BLOCK UNWANTED EMAILS:
+
+GMAIL:
+1. Open the unwanted email
+2. Click the three dots menu
+3. Select "Block [sender name]"
+4. Confirm blocking action
+
+OUTLOOK:
+1. Right-click on the email
+2. Select "Junk" > "Block Sender"
+3. Confirm blocking action
+
+YAHOO MAIL:
+1. Open the email
+2. Click "Spam" button
+3. Select "Block senders"
+
+APPLE MAIL:
+1. Right-click the email
+2. Select "Block Contact"
+3. Confirm blocking
+
+ADDITIONAL STEPS:
+- Report as spam/phishing
+- Create email filters/rules
+- Contact your IT department
+- Save evidence before blocking
+- Consider changing your email if severely compromised
+
+LEGAL ACTIONS:
+- File complaints with cyber crime police
+- Contact email service providers
+- Seek legal counsel for persistent harassment
+- Document all blocking attempts for legal evidence`;
+
+            document.getElementById('outputContent').textContent = guide;
+            document.getElementById('outputSection').style.display = 'block';
+            generatedContent = guide;
+            
+            logToConsole('Email blocking guide displayed', 'info');
+            showStatus('Email blocking guide loaded', 'info');
+            
+            document.getElementById('outputSection').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        function showReportingGuide() {
+            const guide = `EMAIL HARASSMENT REPORTING GUIDELINES
+
+WHERE TO REPORT EMAIL HARASSMENT:
+
+IMMEDIATE THREATS:
+- Police: Call 100
+- Women Helpline: 181
+- Cyber Crime Helpline: 1930
+
+CYBER CRIME REPORTING:
+1. Visit: cybercrime.gov.in
+2. File online complaint
+3. Attach all evidence
+4. Get complaint acknowledgment
+
+EMAIL SERVICE PROVIDERS:
+- Gmail: Report abuse via Gmail help center
+- Outlook: Use Microsoft's abuse reporting
+- Yahoo: Report via Yahoo abuse team
+- Other providers: Check their abuse/security sections
+
+EVIDENCE TO COLLECT:
+✓ Screenshot of harassing emails
+✓ Email headers (technical details)
+✓ Sender's email address and details
+✓ Date and time of incidents
+✓ Any personal information about sender
+✓ Previous communication attempts
+
+WORKPLACE HARASSMENT:
+1. Report to HR Department
+2. File written complaint
+3. Request investigation
+4. Seek Internal Committee review
+5. Escalate to external authorities if needed
+
+LEGAL OPTIONS:
+- File FIR under IT Act 2000
+- Seek restraining orders
+- Civil defamation cases
+- Criminal intimidation charges
+
+SUPPORT RESOURCES:
+- Legal aid clinics
+- Women's rights organizations  
+- Cyber security experts
+- Counseling services
+
+Remember: Document everything and report promptly for best results.`;
+
+            document.getElementById('outputContent').textContent = guide;
+            document.getElementById('outputSection').style.display = 'block';
+            generatedContent = guide;
+            
+            logToConsole('Reporting guidelines displayed', 'info');
+            showStatus('Reporting guidelines loaded', 'info');
+            
+            document.getElementById('outputSection').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        function showLegalResources() {
+            const resources = `LEGAL RESOURCES FOR EMAIL HARASSMENT
+
+INDIAN LAWS APPLICABLE:
+
+INFORMATION TECHNOLOGY ACT 2000:
+- Section 66A: Offensive messages through communication service
+- Section 66C: Identity theft  
+- Section 66D: Cheating by personation using computer resource
+- Section 66E: Violation of privacy
+- Section 67: Publishing obscene content in electronic form
+- Section 67A: Publishing sexually explicit content
+- Section 67B: Child pornography
+
+INDIAN PENAL CODE:
+- Section 354D: Stalking
+- Section 503: Criminal intimidation  
+- Section 504: Intentional insult to provoke breach of peace
+- Section 506: Criminal intimidation punishment
+- Section 507: Criminal intimidation by anonymous communication
+- Section 509: Word/gesture/act intended to insult modesty of woman
+
+WORKPLACE PROTECTION:
+- Sexual Harassment of Women at Workplace (Prevention, Prohibition and Redressal) Act, 2013
+- Industrial Disputes Act, 1947
+- Labor law provisions
+
+LEGAL REMEDIES AVAILABLE:
+
+CRIMINAL REMEDIES:
+1. File FIR with local police
+2. Approach cyber crime police stations
+3. File online complaints at cybercrime.gov.in
+4. Seek anticipatory bail if counter-cases feared
+
+CIVIL REMEDIES:
+1. Defamation suits (Section 499-500 IPC)
+2. Injunction orders from courts
+3. Damages for mental harassment
+4. Privacy violation compensation
+
+EMERGENCY LEGAL CONTACTS:
+
+FREE LEGAL AID:
+- National Legal Services Authority (NALSA)
+- State Legal Services Authorities
+- District Legal Services Authorities
+- Lok Adalats
+
+WOMEN'S LEGAL AID:
+- All Women Police Stations
+- Women's Commission (State/National)
+- NGOs working on women's rights
+- Women lawyers associations
+
+CYBER LAW EXPERTS:
+- Indian Cyber Law Association
+- Cyber law firms in major cities
+- Tech-savvy legal practitioners
+- Information security legal experts
+
+HOW TO CHOOSE A LAWYER:
+✓ Experience in cyber law cases
+✓ Knowledge of IT Act provisions  
+✓ Track record in harassment cases
+✓ Understanding of digital evidence
+✓ Reasonable fee structure
+✓ Local court presence
+
+IMPORTANT NOTES:
+- Keep all evidence safely
+- Don't delete harassing emails
+- Take screenshots with timestamps
+- Get technical evidence authenticated
+- File complaints within limitation periods
+- Seek interim relief if situation is urgent
+
+COST CONSIDERATIONS:
+- Legal aid for economically weaker sections
+- Court fees and lawyer charges
+- Evidence collection costs
+- Potential counter-case expenses
+
+Remember: Early legal intervention often prevents escalation.`;
+
+            document.getElementById('outputContent').textContent = resources;
+            document.getElementById('outputSection').style.display = 'block';
+            generatedContent = resources;
+            
+            logToConsole('Legal resources displayed', 'info');
+            showStatus('Legal resources loaded', 'info');
+            
+            document.getElementById('outputSection').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        // Performance monitoring
+        window.addEventListener('load', function() {
+            logToConsole('Page fully loaded and optimized', 'success');
+            
+            // Basic performance metrics
+            if (window.performance) {
+                const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
+                logToConsole(`Page load time: ${loadTime}ms`, 'info');
+            }
+        });
+
+        // Memory usage monitoring (basic)
+        setInterval(() => {
+            if (window.performance && window.performance.memory) {
+                const used = Math.round(window.performance.memory.usedJSHeapSize / 1024 / 1024);
+                if (used > 50) { // Alert if using more than 50MB
+                    logToConsole(`Memory usage: ${used}MB`, 'warning');
+                }
+            }
+        }, 30000);
+
+        // Cross-browser compatibility checks
+        function checkBrowserSupport() {
+            const features = {
+                'Clipboard API': !!navigator.clipboard,
+                'CSS Grid': CSS.supports('display', 'grid'),
+                'Fetch API': !!window.fetch,
+                'Local Storage': !!window.localStorage,
+                'Promise': !!window.Promise
+            };
+
+            Object.entries(features).forEach(([feature, supported]) => {
+                const status = supported ? 'success' : 'warning';
+                logToConsole(`${feature}: ${supported ? 'Supported' : 'Not supported'}`, status);
+            });
+        }
+
+        // Run browser support check
+        checkBrowserSupport();
+
+        // Unit test functions (basic client-side testing)
+        function runBasicTests() {
+            console.log('Running basic functionality tests...');
+            
+            // Test email validation
+            console.assert(validateEmail('test@example.com') === true, 'Email validation test failed');
+            console.assert(validateEmail('invalid-email') === false, 'Email validation test failed');
+            
+            // Test required field validation  
+            console.assert(validateRequired('test') === true, 'Required validation test failed');
+            console.assert(validateRequired('') === false, 'Required validation test failed');
+            
+            // Test harassment type selection
+            console.assert(typeof generateComplaintLetter === 'function', 'Complaint generator function missing');
+            
+            logToConsole('Basic unit tests completed', 'success');
+        }
+
+        // Run tests in development
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            setTimeout(runBasicTests, 2000);
+        }
+
+        // Accessibility features
+        document.addEventListener('keydown', function(e) {
+            // Skip to main content with Alt+M
+            if (e.altKey && e.key === 'm') {
+                document.querySelector('main').focus();
+            }
+            
+            // Focus trap for modal-like sections
+            if (e.key === 'Escape') {
+                const activeElement = document.activeElement;
+                if (activeElement && activeElement.closest('.output-section')) {
+                    document.querySelector('#harassmentForm').focus();
+                }
+            }
+        });
+
+        // Add high contrast mode toggle
+        function toggleHighContrast() {
+            document.body.classList.toggle('high-contrast');
+            logToConsole('High contrast mode toggled', 'info');
+        }
+
+        // Add keyboard shortcuts info
+        function showKeyboardShortcuts() {
+            const shortcuts = `KEYBOARD SHORTCUTS:
+
+Alt + M: Focus main content
+Escape: Return focus to form
+Tab: Navigate through elements
+Space/Enter: Activate buttons
+Arrow Keys: Navigate cards
+
+ACCESSIBILITY FEATURES:
+✓ Screen reader compatible
+✓ Keyboard navigation support
+✓ High contrast mode
+✓ Focus indicators
+✓ ARIA labels and descriptions
+✓ Semantic HTML structure`;
+
+            alert(shortcuts);
+        }
+
+        // Expose functions for testing
+        if (window.location.hostname === 'localhost') {
+            window.testFunctions = {
+                validateEmail,
+                validateRequired,
+                generateComplaintLetter,
+                toggleHighContrast,
+                showKeyboardShortcuts
+            };
+        }
+    </script>
+</body>
+</html>

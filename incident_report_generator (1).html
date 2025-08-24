@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Harassment Incident Report Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .language-toggle {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            background: transparent;
+            color: white;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .lang-btn.active {
+            background: white;
+            color: #1e3c72;
+        }
+
+        .lang-btn:hover:not(.active) {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .form-container {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 30px;
+            border: 2px solid #f0f0f0;
+            border-radius: 15px;
+            background: #fafafa;
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #1e3c72;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .language-toggle {
+                position: static;
+                justify-content: center;
+                margin-top: 20px;
+            }
+            .header {
+                text-align: center;
+            }
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e1e1;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 15px;
+            background: white;
+            border: 2px solid #e1e1e1;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .checkbox-item:hover {
+            border-color: #667eea;
+            transform: translateY(-1px);
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .checkbox-label {
+            font-weight: 500;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .severity-indicator {
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .severity-low {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            color: #155724;
+            border-color: #28a745;
+        }
+
+        .severity-medium {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            color: #856404;
+            border-color: #ffc107;
+        }
+
+        .severity-high {
+            background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+            color: #721c24;
+            border-color: #dc3545;
+        }
+
+        .severity-critical {
+            background: linear-gradient(135deg, #d1ecf1, #bee5eb);
+            color: #0c5460;
+            border-color: #17a2b8;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-generate {
+            width: 100%;
+            margin: 30px 0;
+            font-size: 1.3rem;
+            padding: 20px;
+        }
+
+        .report-output {
+            margin-top: 30px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border: 2px solid #e9ecef;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .validation-error {
+            color: #dc3545;
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .required {
+            color: #dc3545;
+        }
+
+        .evidence-item {
+            background: white;
+            border: 2px solid #e1e1e1;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .evidence-item:hover {
+            border-color: #667eea;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 id="mainTitle">Financial Harassment Incident Report Generator</h1>
+            <p id="subtitle">Document harassment incidents for legal action and RBI compliance</p>
+            <div class="language-toggle">
+                <button class="lang-btn active" onclick="setLanguage('en')" id="btnEn">English</button>
+                <button class="lang-btn" onclick="setLanguage('hi')" id="btnHi">हिंदी</button>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <form id="incidentForm">
+                <!-- Borrower Information -->
+                <div class="section">
+                    <h2 class="section-title">
+                        <div class="section-icon"></div>
+                        <span data-key="borrowerInfo">Borrower Information</span>
+                    </h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-key="fullName">Full Name <span class="required">*</span></label>
+                            <input type="text" id="fullName" required>
+                            <div class="validation-error" id="fullNameError">This field is required</div>
+                        </div>
+                        <div class="form-group">
+                            <label data-key="phone">Phone Number <span class="required">*</span></label>
+                            <input type="tel" id="phone" required>
+                            <div class="validation-error" id="phoneError">This field is required</div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-key="email">Email Address</label>
+                            <input type="email" id="email">
+                        </div>
+                        <div class="form-group">
+                            <label data-key="address">Address <span class="required">*</span></label>
+                            <input type="text" id="address" required>
+                            <div class="validation-error" id="addressError">This field is required</div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-key="loanAccount">Loan Account Number <span class="required">*</span></label>
+                            <input type="text" id="loanAccount" required>
+                            <div class="validation-error" id="loanAccountError">This field is required</div>
+                        </div>
+                        <div class="form-group">
+                            <label data-key="loanAmount">Loan Amount (₹)</label>
+                            <input type="number" id="loanAmount">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Financial Institution -->
+                <div class="section">
+                    <h2 class="section-title">
+                        <div class="section-icon"></div>
+                        <span data-key="institutionDetails">Financial Institution Details</span>
+                    </h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-key="institution">Select Institution <span class="required">*</span></label>
+                            <select id="institution" required>
+                                <option value="" data-key="selectOption">-- Select Institution --</option>
+                                <option value="State Bank of India">State Bank of India</option>
+                                <option value="HDFC Bank">HDFC Bank</option>
+                                <option value="ICICI Bank">ICICI Bank</option>
+                                <option value="Axis Bank">Axis Bank</option>
+                                <option value="Kotak Mahindra Bank">Kotak Mahindra Bank</option>
+                                <option value="IndusInd Bank">IndusInd Bank</option>
+                                <option value="YES Bank">YES Bank</option>
+                                <option value="IDFC First Bank">IDFC First Bank</option>
+                                <option value="Punjab National Bank">Punjab National Bank</option>
+                                <option value="Bank of Baroda">Bank of Baroda</option>
+                                <option value="Canara Bank">Canara Bank</option>
+                                <option value="Union Bank of India">Union Bank of India</option>
+                                <option value="Bank of India">Bank of India</option>
+                                <option value="Central Bank of India">Central Bank of India</option>
+                                <option value="Indian Bank">Indian Bank</option>
+                                <option value="Indian Overseas Bank">Indian Overseas Bank</option>
+                                <option value="UCO Bank">UCO Bank</option>
+                                <option value="Bank of Maharashtra">Bank of Maharashtra</option>
+                                <option value="Punjab & Sind Bank">Punjab & Sind Bank</option>
+                                <option value="HDFC Ltd">HDFC Ltd</option>
+                                <option value="Bajaj Finserv">Bajaj Finserv</option>
+                                <option value="Tata Capital">Tata Capital</option>
+                                <option value="Mahindra Finance">Mahindra Finance</option>
+                                <option value="Cholamandalam Finance">Cholamandalam Finance</option>
+                                <option value="L&T Finance">L&T Finance</option>
+                                <option value="Muthoot Finance">Muthoot Finance</option>
+                                <option value="Manappuram Finance">Manappuram Finance</option>
+                                <option value="Shriram Finance">Shriram Finance</option>
+                                <option value="Aditya Birla Finance">Aditya Birla Finance</option>
+                                <option value="Other">Other (Specify below)</option>
+                            </select>
+                            <div class="validation-error" id="institutionError">Please select an institution</div>
+                        </div>
+                        <div class="form-group">
+                            <label data-key="otherInstitution">Other Institution (if selected above)</label>
+                            <input type="text" id="otherInstitution">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label data-key="branchAddress">Branch/Office Address</label>
+                        <input type="text" id="branchAddress">
+                    </div>
+                </div>
+
+                <!-- Incident Details -->
+                <div class="section">
+                    <h2 class="section-title">
+                        <div class="section-icon"></div>
+                        <span data-key="incidentDetails">Incident Details</span>
+                    </h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-key="incidentDate">Date of Incident <span class="required">*</span></label>
+                            <input type="date" id="incidentDate" required>
+                            <div class="validation-error" id="incidentDateError">This field is required</div>
+                        </div>
+                        <div class="form-group">
+                            <label data-key="incidentTime">Time of Incident</label>
+                            <input type="time" id="incidentTime">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label data-key="incidentLocation">Location of Incident</label>
+                        <input type="text" id="incidentLocation">
+                    </div>
+                    <div class="form-group">
+                        <label data-key="agentName">Collection Agent/Officer Name</label>
+                        <input type="text" id="agentName">
+                    </div>
+                    <div class="form-group">
+                        <label data-key="agentPhone">Agent Phone Number</label>
+                        <input type="tel" id="agentPhone">
+                    </div>
+                </div>
+
+                <!-- Harassment Types -->
+                <div class="section">
+                    <h2 class="section-title">
+                        <div class="section-icon"></div>
+                        <span data-key="harassmentTypes">Types of Harassment Experienced</span>
+                    </h2>
+                    <div class="checkbox-group" id="harassmentCheckboxes">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="harassment1" value="threat_violence" onchange="updateSeverity()">
+                            <label for="harassment1" class="checkbox-label" data-key="threatViolence">Threats of violence or physical harm</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="harassment2" value="abusive_language" onchange="updateSeverity()">
+                            <label for="harassment2" class="checkbox-label" data-key="abusiveLanguage">Abusive or offensive language</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="harassment3" value="excessive_calls" onchange="updateSeverity()">
+                            <label for="harassment3" class="checkbox-label" data-key="excessiveCalls">Excessive calling (>3 calls per day)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="harassment4" value="inappropriate_hours" onchange="updateSeverity()">
+                            <label for="harassment4" class="checkbox-label" data-key="inappropriateHours">Calls outside permitted hours (8 AM - 7 PM)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="harassment5" value="family_harassment" onchange="updateSeverity()">
+                            <label for="harassment5" class="checkbox-label" data-key="familyHarassment">Harassment of family members</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="harassment6" value="workplace_contact" onchange="updateSeverity()">
+                            <label for="harassment6" class="checkbox-label" data-key="workplaceContact">Unauthorized contact at workplace</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="harassment7" value="public_disclosure" onchange="updateSeverity()">
+                            <label for="harassment7" class="checkbox-label" data-key="publicDisclosure">Public disclosure of debt information</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="harassment8" value="false_representation" onchange="updateSeverity()">
+                            <label for="harassment8" class="checkbox-label" data-key="falseRepresentation">False representation as legal/police</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="harassment9" value="property_visit" onchange="updateSeverity()">
+                            <label for="harassment9" class="checkbox-label" data-key="propertyVisit">Unauthorized visits to property</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="harassment10" value="social_media" onchange="updateSeverity()">
+                            <label for="harassment10" class="checkbox-label" data-key="socialMedia">Social media harassment/defamation</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Severity Indicator -->
+                <div id="severityIndicator" class="severity-indicator severity-low">
+                    <span data-key="severityLevel">Severity Level: Low</span>
+                </div>
+
+                <!-- Evidence -->
+                <div class="section">
+                    <h2 class="section-title">
+                        <div class="section-icon"></div>
+                        <span data-key="evidenceTitle">Evidence Available</span>
+                    </h2>
+                    <div class="form-group">
+                        <label data-key="evidenceTypes">Select all evidence types available:</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="evidence1" value="audio_recording">
+                                <label for="evidence1" class="checkbox-label" data-key="audioRecording">Audio recordings of calls</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="evidence2" value="text_messages">
+                                <label for="evidence2" class="checkbox-label" data-key="textMessages">Text messages/SMS</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="evidence3" value="whatsapp">
+                                <label for="evidence3" class="checkbox-label" data-key="whatsapp">WhatsApp messages</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="evidence4" value="email">
+                                <label for="evidence4" class="checkbox-label" data-key="emailEvidence">Email communications</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="evidence5" value="photos">
+                                <label for="evidence5" class="checkbox-label" data-key="photos">Photographs/Screenshots</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="evidence6" value="witnesses">
+                                <label for="evidence6" class="checkbox-label" data-key="witnesses">Witness statements</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label data-key="evidenceDescription">Detailed Evidence Description:</label>
+                        <textarea id="evidenceDescription" rows="4" placeholder="Describe your evidence in detail..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Additional Details -->
+                <div class="section">
+                    <h2 class="section-title">
+                        <div class="section-icon"></div>
+                        <span data-key="additionalDetails">Additional Details</span>
+                    </h2>
+                    <div class="form-group">
+                        <label data-key="incidentDescription">Detailed Incident Description <span class="required">*</span></label>
+                        <textarea id="incidentDescription" rows="6" required placeholder="Provide a detailed description of what happened..."></textarea>
+                        <div class="validation-error" id="incidentDescriptionError">This field is required</div>
+                    </div>
+                    <div class="form-group">
+                        <label data-key="previousComplaints">Previous Complaints Made:</label>
+                        <textarea id="previousComplaints" rows="3" placeholder="Describe any previous complaints made to the institution or authorities..."></textarea>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-generate" onclick="generateReport()" data-key="generateReport">
+                    Generate Incident Report
+                </button>
+
+                <div id="reportOutput" class="report-output hidden"></div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let currentLanguage = 'en';
+        
+        const translations = {
+            en: {
+                mainTitle: "Financial Harassment Incident Report Generator",
+                subtitle: "Document harassment incidents for legal action and RBI compliance",
+                borrowerInfo: "Borrower Information",
+                fullName: "Full Name",
+                phone: "Phone Number",
+                email: "Email Address",
+                address: "Address",
+                loanAccount: "Loan Account Number",
+                loanAmount: "Loan Amount (₹)",
+                institutionDetails: "Financial Institution Details",
+                institution: "Select Institution",
+                selectOption: "-- Select Institution --",
+                otherInstitution: "Other Institution (if selected above)",
+                branchAddress: "Branch/Office Address",
+                incidentDetails: "Incident Details",
+                incidentDate: "Date of Incident",
+                incidentTime: "Time of Incident",
+                incidentLocation: "Location of Incident",
+                agentName: "Collection Agent/Officer Name",
+                agentPhone: "Agent Phone Number",
+                harassmentTypes: "Types of Harassment Experienced",
+                threatViolence: "Threats of violence or physical harm",
+                abusiveLanguage: "Abusive or offensive language",
+                excessiveCalls: "Excessive calling (>3 calls per day)",
+                inappropriateHours: "Calls outside permitted hours (8 AM - 7 PM)",
+                familyHarassment: "Harassment of family members",
+                workplaceContact: "Unauthorized contact at workplace",
+                publicDisclosure: "Public disclosure of debt information",
+                falseRepresentation: "False representation as legal/police",
+                propertyVisit: "Unauthorized visits to property",
+                socialMedia: "Social media harassment/defamation",
+                severityLevel: "Severity Level: ",
+                evidenceTitle: "Evidence Available",
+                evidenceTypes: "Select all evidence types available:",
+                audioRecording: "Audio recordings of calls",
+                textMessages: "Text messages/SMS",
+                whatsapp: "WhatsApp messages",
+                emailEvidence: "Email communications",
+                photos: "Photographs/Screenshots",
+                witnesses: "Witness statements",
+                evidenceDescription: "Detailed Evidence Description:",
+                additionalDetails: "Additional Details",
+                incidentDescription: "Detailed Incident Description",
+                previousComplaints: "Previous Complaints Made:",
+                generateReport: "Generate Incident Report",
+                severityLow: "Low",
+                severityMedium: "Medium",
+                severityHigh: "High",
+                severityCritical: "Critical"
+            },
+            hi: {
+                mainTitle: "वित्तीय उत्पीड़न घटना रिपोर्ट जेनरेटर",
+                subtitle: "कानूनी कार्रवाई और RBI अनुपालन के लिए उत्पीड़न की घटनाओं का दस्तावेजीकरण करें",
+                borrowerInfo: "उधारकर्ता की जानकारी",
+                fullName: "पूरा नाम",
+                phone: "फोन नंबर",
+                email: "ईमेल पता",
+                address: "पता",
+                loanAccount: "ऋण खाता संख्या",
+                loanAmount: "ऋण राशि (₹)",
+                institutionDetails: "वित्तीय संस्थान विवरण",
+                institution: "संस्थान चुनें",
+                selectOption: "-- संस्थान चुनें --",
+                otherInstitution: "अन्य संस्थान (यदि ऊपर चुना गया हो)",
+                branchAddress: "शाखा/कार्यालय का पता",
+                incidentDetails: "घटना का विवरण",
+                incidentDate: "घटना की तारीख",
+                incidentTime: "घटना का समय",
+                incidentLocation: "घटना स्थल",
+                agentName: "वसूली एजेंट/अधिकारी का नाम",
+                agentPhone: "एजेंट का फोन नंबर",
+                harassmentTypes: "अनुभव किए गए उत्पीड़न के प्रकार",
+                threatViolence: "हिंसा या शारीरिक नुकसान की धमकी",
+                abusiveLanguage: "गाली-गलौज या आक्रामक भाषा",
+                excessiveCalls: "अत्यधिक कॉल करना (दिन में 3 से अधिक कॉल)",
+                inappropriateHours: "अनुमतित समय के बाहर कॉल (सुबह 8 बजे - शाम 7 बजे)",
+                familyHarassment: "पारिवारिक सदस्यों का उत्पीड़न",
+                workplaceContact: "कार्यक्षेत्र में अनधिकृत संपर्क",
+                publicDisclosure: "कर्ज की जानकारी का सार्वजनिक खुलासा",
+                falseRepresentation: "कानूनी/पुलिस के रूप में झूठा प्रतिनिधित्व",
+                propertyVisit: "संपत्ति पर अनधिकृत दौरा",
+                socialMedia: "सोशल मीडिया उत्पीड़न/मानहानि",
+                severityLevel: "गंभीरता स्तर: ",
+                evidenceTitle: "उपलब्ध साक्ष्य",
+                evidenceTypes: "उपलब्ध सभी साक्ष्य प्रकार चुनें:",
+                audioRecording: "कॉल की ऑडियो रिकॉर्डिंग",
+                textMessages: "टेक्स्ट संदेश/SMS",
+                whatsapp: "व्हाट्सऐप संदेश",
+                emailEvidence: "ईमेल संपर्क",
+                photos: "फोटो/स्क्रीनशॉट",
+                witnesses: "गवाह बयान",
+                evidenceDescription: "विस्तृत साक्ष्य विवरण:",
+                additionalDetails: "अतिरिक्त विवरण",
+                incidentDescription: "विस्तृत घटना विवरण",
+                previousComplaints: "पिछली शिकायतें:",
+                generateReport: "घटना रिपोर्ट जेनरेट करें",
+                severityLow: "कम",
+                severityMedium: "मध्यम",
+                severityHigh: "उच्च",
+                severityCritical: "गंभीर"
+            }
+        };
+
+        // Severity scoring system
+        const severityWeights = {
+            threat_violence: 4,
+            false_representation: 3,
+            family_harassment: 3,
+            property_visit: 3,
+            public_disclosure: 2,
+            social_media: 2,
+            abusive_language: 2,
+            workplace_contact: 2,
+            excessive_calls: 1,
+            inappropriate_hours: 1
+        };
+
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update button states
+            document.getElementById('btnEn').classList.toggle('active', lang === 'en');
+            document.getElementById('btnHi').classList.toggle('active', lang === 'hi');
+            
+            // Update all translatable elements
+            document.querySelectorAll('[data-key]').forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translations[lang][key]) {
+                    if (element.tagName === 'INPUT' && element.type === 'button') {
+                        element.value = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+            
+            // Update placeholders
+            if (lang === 'hi') {
+                document.getElementById('evidenceDescription').placeholder = "अपने साक्ष्य का विस्तृत विवरण दें...";
+                document.getElementById('incidentDescription').placeholder = "क्या हुआ था, इसका विस्तृत विवरण दें...";
+                document.getElementById('previousComplaints').placeholder = "संस्थान या अधिकारियों के पास पहले की गई किसी भी शिकायत का वर्णन करें...";
+            } else {
+                document.getElementById('evidenceDescription').placeholder = "Describe your evidence in detail...";
+                document.getElementById('incidentDescription').placeholder = "Provide a detailed description of what happened...";
+                document.getElementById('previousComplaints').placeholder = "Describe any previous complaints made to the institution or authorities...";
+            }
+        }
+
+        function updateSeverity() {
+            let totalScore = 0;
+            const checkedBoxes = document.querySelectorAll('#harassmentCheckboxes input[type="checkbox"]:checked');
+            
+            checkedBoxes.forEach(checkbox => {
+                const weight = severityWeights[checkbox.value] || 1;
+                totalScore += weight;
+            });
+
+            let severityLevel, severityClass, severityText;
+            
+            if (totalScore === 0) {
+                severityLevel = 'Low';
+                severityClass = 'severity-low';
+            } else if (totalScore <= 3) {
+                severityLevel = 'Low';
+                severityClass = 'severity-low';
+            } else if (totalScore <= 6) {
+                severityLevel = 'Medium';
+                severityClass = 'severity-medium';
+            } else if (totalScore <= 10) {
+                severityLevel = 'High';
+                severityClass = 'severity-high';
+            } else {
+                severityLevel = 'Critical';
+                severityClass = 'severity-critical';
+            }
+
+            const severityMap = {
+                'Low': currentLanguage === 'hi' ? translations.hi.severityLow : translations.en.severityLow,
+                'Medium': currentLanguage === 'hi' ? translations.hi.severityMedium : translations.en.severityMedium,
+                'High': currentLanguage === 'hi' ? translations.hi.severityHigh : translations.en.severityHigh,
+                'Critical': currentLanguage === 'hi' ? translations.hi.severityCritical : translations.en.severityCritical
+            };
+
+            const indicator = document.getElementById('severityIndicator');
+            indicator.className = `severity-indicator ${severityClass}`;
+            indicator.innerHTML = `<span data-key="severityLevel">${translations[currentLanguage].severityLevel}${severityMap[severityLevel]}</span>`;
+        }
+
+        function validateForm() {
+            const requiredFields = ['fullName', 'phone', 'address', 'loanAccount', 'institution', 'incidentDate', 'incidentDescription'];
+            let isValid = true;
+            
+            requiredFields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                const errorElement = document.getElementById(fieldId + 'Error');
+                
+                if (!field.value.trim()) {
+                    if (errorElement) {
+                        errorElement.style.display = 'block';
+                        errorElement.textContent = currentLanguage === 'hi' ? 'यह फील्ड आवश्यक है' : 'This field is required';
+                    }
+                    field.style.borderColor = '#dc3545';
+                    isValid = false;
+                } else {
+                    if (errorElement) {
+                        errorElement.style.display = 'none';
+                    }
+                    field.style.borderColor = '#e1e1e1';
+                }
+            });
+            
+            return isValid;
+        }
+
+        function getSelectedHarassmentTypes() {
+            const selected = [];
+            const checkboxes = document.querySelectorAll('#harassmentCheckboxes input[type="checkbox"]:checked');
+            
+            checkboxes.forEach(checkbox => {
+                const label = document.querySelector(`label[for="${checkbox.id}"]`);
+                selected.push(label.textContent);
+            });
+            
+            return selected;
+        }
+
+        function getSelectedEvidenceTypes() {
+            const selected = [];
+            const checkboxes = document.querySelectorAll('.section:nth-of-type(6) input[type="checkbox"]:checked');
+            
+            checkboxes.forEach(checkbox => {
+                const label = document.querySelector(`label[for="${checkbox.id}"]`);
+                selected.push(label.textContent);
+            });
+            
+            return selected;
+        }
+
+        function getLegalViolations(harassmentTypes) {
+            const violations = [];
+            
+            harassmentTypes.forEach(type => {
+                if (type.includes('violence') || type.includes('हिंसा')) {
+                    violations.push(currentLanguage === 'hi' ? 
+                        'भारतीय दंड संहिता धारा 506 - आपराधिक धमकी' : 
+                        'Indian Penal Code Section 506 - Criminal Intimidation');
+                }
+                if (type.includes('abusive') || type.includes('गाली')) {
+                    violations.push(currentLanguage === 'hi' ? 
+                        'भारतीय दंड संहिता धारा 294 - अश्लील कार्य और गाली-गलौज' : 
+                        'Indian Penal Code Section 294 - Obscene acts and songs');
+                }
+                if (type.includes('family') || type.includes('पारिवारिक')) {
+                    violations.push(currentLanguage === 'hi' ? 
+                        'RBI दिशानिर्देश - तृतीय पक्ष संपर्क प्रतिबंध' : 
+                        'RBI Guidelines - Third Party Contact Restrictions');
+                }
+                if (type.includes('excessive') || type.includes('अत्यधिक')) {
+                    violations.push(currentLanguage === 'hi' ? 
+                        'RBI दिशानिर्देश - दैनिक संपर्क सीमा उल्लंघन' : 
+                        'RBI Guidelines - Daily Contact Limit Violation');
+                }
+                if (type.includes('hours') || type.includes('समय')) {
+                    violations.push(currentLanguage === 'hi' ? 
+                        'RBI दिशानिर्देश - अनुमतित समय उल्लंघन' : 
+                        'RBI Guidelines - Permitted Hours Violation');
+                }
+                if (type.includes('workplace') || type.includes('कार्यक्षेत्र')) {
+                    violations.push(currentLanguage === 'hi' ? 
+                        'RBI दिशानिर्देश - कार्यस्थल संपर्क प्रतिबंध' : 
+                        'RBI Guidelines - Workplace Contact Prohibition');
+                }
+                if (type.includes('public') || type.includes('सार्वजनिक')) {
+                    violations.push(currentLanguage === 'hi' ? 
+                        'भारतीय दंड संहिता धारा 499 - मानहानि' : 
+                        'Indian Penal Code Section 499 - Defamation');
+                }
+                if (type.includes('false') || type.includes('झूठा')) {
+                    violations.push(currentLanguage === 'hi' ? 
+                        'भारतीय दंड संहिता धारा 170 - झूठे व्यक्तित्व का प्रतिरूपण' : 
+                        'Indian Penal Code Section 170 - Impersonation');
+                }
+                if (type.includes('property') || type.includes('संपत्ति')) {
+                    violations.push(currentLanguage === 'hi' ? 
+                        'भारतीय दंड संहिता धारा 447 - आपराधिक अतिक्रमण' : 
+                        'Indian Penal Code Section 447 - Criminal Trespass');
+                }
+                if (type.includes('social media') || type.includes('सोशल मीडिया')) {
+                    violations.push(currentLanguage === 'hi' ? 
+                        'IT अधिनियम 2000 धारा 66A - आक्रामक संदेश भेजना' : 
+                        'IT Act 2000 Section 66A - Sending offensive messages');
+                }
+            });
+            
+            return [...new Set(violations)];
+        }
+
+        function generateReport() {
+            if (!validateForm()) {
+                alert(currentLanguage === 'hi' ? 
+                    'कृपया सभी आवश्यक फील्ड भरें' : 
+                    'Please fill all required fields');
+                return;
+            }
+
+            const formData = {
+                fullName: document.getElementById('fullName').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                address: document.getElementById('address').value,
+                loanAccount: document.getElementById('loanAccount').value,
+                loanAmount: document.getElementById('loanAmount').value,
+                institution: document.getElementById('institution').value,
+                otherInstitution: document.getElementById('otherInstitution').value,
+                branchAddress: document.getElementById('branchAddress').value,
+                incidentDate: document.getElementById('incidentDate').value,
+                incidentTime: document.getElementById('incidentTime').value,
+                incidentLocation: document.getElementById('incidentLocation').value,
+                agentName: document.getElementById('agentName').value,
+                agentPhone: document.getElementById('agentPhone').value,
+                harassmentTypes: getSelectedHarassmentTypes(),
+                evidenceTypes: getSelectedEvidenceTypes(),
+                evidenceDescription: document.getElementById('evidenceDescription').value,
+                incidentDescription: document.getElementById('incidentDescription').value,
+                previousComplaints: document.getElementById('previousComplaints').value
+            };
+
+            const currentDate = new Date().toLocaleDateString(currentLanguage === 'hi' ? 'hi-IN' : 'en-IN');
+            const institutionName = formData.institution === 'Other' ? formData.otherInstitution : formData.institution;
+            const violations = getLegalViolations(formData.harassmentTypes);
+
+            let report = '';
+
+            if (currentLanguage === 'hi') {
+                report = `
+═══════════════════════════════════════════════════
+           वित्तीय उत्पीड़न घटना रिपोर्ट
+═══════════════════════════════════════════════════
+
+रिपोर्ट तैयार करने की तारीख: ${currentDate}
+रिपोर्ट संदर्भ संख्या: FHR-${Date.now()}
+
+1. उधारकर्ता की जानकारी:
+   नाम: ${formData.fullName}
+   फोन: ${formData.phone}
+   ईमेल: ${formData.email || 'प्रदान नहीं किया गया'}
+   पता: ${formData.address}
+   ऋण खाता संख्या: ${formData.loanAccount}
+   ऋण राशि: ${formData.loanAmount ? '₹' + formData.loanAmount : 'प्रदान नहीं किया गया'}
+
+2. वित्तीय संस्थान विवरण:
+   संस्थान का नाम: ${institutionName}
+   शाखा/कार्यालय का पता: ${formData.branchAddress || 'प्रदान नहीं किया गया'}
+
+3. घटना का विवरण:
+   दिनांक: ${formData.incidentDate}
+   समय: ${formData.incidentTime || 'निर्दिष्ट नहीं'}
+   स्थान: ${formData.incidentLocation || 'निर्दिष्ट नहीं'}
+   वसूली एजेंट का नाम: ${formData.agentName || 'अज्ञात'}
+   एजेंट का फोन: ${formData.agentPhone || 'प्रदान नहीं किया गया'}
+
+4. उत्पीड़न के प्रकार:
+${formData.harassmentTypes.length > 0 ? formData.harassmentTypes.map(type => `   • ${type}`).join('\n') : '   कोई नहीं चुना गया'}
+
+5. कानूनी उल्लंघन:
+${violations.length > 0 ? violations.map(violation => `   • ${violation}`).join('\n') : '   कोई पहचाना नहीं गया'}
+
+6. उपलब्ध साक्ष्य:
+${formData.evidenceTypes.length > 0 ? formData.evidenceTypes.map(evidence => `   • ${evidence}`).join('\n') : '   कोई नहीं चुना गया'}
+
+   साक्ष्य विवरण:
+   ${formData.evidenceDescription || 'कोई विवरण प्रदान नहीं किया गया'}
+
+7. घटना का विस्तृत विवरण:
+${formData.incidentDescription}
+
+8. पिछली शिकायतें:
+${formData.previousComplaints || 'कोई पिछली शिकायत नहीं'}
+
+9. सुझाई गई कार्रवाई:
+   • RBI बैंकिंग लोकपाल में शिकायत दर्ज करें
+   • स्थानीय पुलिस स्टेशन में FIR दर्ज करें
+   • उपभोक्ता न्यायालय में मामला दर्ज करें
+   • राष्ट्रीय उपभोक्ता हेल्पलाइन से संपर्क करें
+
+10. महत्वपूर्ण संपर्क जानकारी:
+    • RBI बैंकिंग लोकपाल: 14448
+    • उपभोक्ता हेल्पलाइन: 1915
+    • पुलिस: 100
+    • महिला हेल्पलाइन: 1091
+
+═══════════════════════════════════════════════════
+यह रिपोर्ट कानूनी कार्रवाई के लिए तैयार की गई है
+═══════════════════════════════════════════════════`;
+            } else {
+                report = `
+═══════════════════════════════════════════════════
+         FINANCIAL HARASSMENT INCIDENT REPORT
+═══════════════════════════════════════════════════
+
+Report Generated Date: ${currentDate}
+Report Reference Number: FHR-${Date.now()}
+
+1. BORROWER INFORMATION:
+   Name: ${formData.fullName}
+   Phone: ${formData.phone}
+   Email: ${formData.email || 'Not provided'}
+   Address: ${formData.address}
+   Loan Account Number: ${formData.loanAccount}
+   Loan Amount: ${formData.loanAmount ? '₹' + formData.loanAmount : 'Not provided'}
+
+2. FINANCIAL INSTITUTION DETAILS:
+   Institution Name: ${institutionName}
+   Branch/Office Address: ${formData.branchAddress || 'Not provided'}
+
+3. INCIDENT DETAILS:
+   Date: ${formData.incidentDate}
+   Time: ${formData.incidentTime || 'Not specified'}
+   Location: ${formData.incidentLocation || 'Not specified'}
+   Collection Agent Name: ${formData.agentName || 'Unknown'}
+   Agent Phone: ${formData.agentPhone || 'Not provided'}
+
+4. HARASSMENT TYPES EXPERIENCED:
+${formData.harassmentTypes.length > 0 ? formData.harassmentTypes.map(type => `   • ${type}`).join('\n') : '   None selected'}
+
+5. LEGAL VIOLATIONS IDENTIFIED:
+${violations.length > 0 ? violations.map(violation => `   • ${violation}`).join('\n') : '   None identified'}
+
+6. EVIDENCE AVAILABLE:
+${formData.evidenceTypes.length > 0 ? formData.evidenceTypes.map(evidence => `   • ${evidence}`).join('\n') : '   None selected'}
+
+   Evidence Description:
+   ${formData.evidenceDescription || 'No description provided'}
+
+7. DETAILED INCIDENT DESCRIPTION:
+${formData.incidentDescription}
+
+8. PREVIOUS COMPLAINTS:
+${formData.previousComplaints || 'No previous complaints'}
+
+9. RECOMMENDED ACTIONS:
+   • File complaint with RBI Banking Ombudsman
+   • Lodge FIR at local police station
+   • Approach Consumer Court for legal remedy
+   • Contact National Consumer Helpline
+
+10. IMPORTANT CONTACT INFORMATION:
+    • RBI Banking Ombudsman: 14448
+    • Consumer Helpline: 1915
+    • Police Emergency: 100
+    • Women Helpline: 1091
+
+═══════════════════════════════════════════════════
+This report is prepared for legal proceedings
+═══════════════════════════════════════════════════`;
+            }
+
+            const reportOutput = document.getElementById('reportOutput');
+            reportOutput.textContent = report;
+            reportOutput.classList.remove('hidden');
+            reportOutput.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Initialize the form
+        document.addEventListener('DOMContentLoaded', function() {
+            setLanguage('en');
+            updateSeverity();
+        });
+    </script>
+</body>
+</html>
+                

@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Emergency contacts widget with Indian helplines, RBI offices, cyber crime reporting, consumer courts, and legal aid services">
+    <meta name="keywords" content="emergency, contacts, India, helplines, police, fire, medical, ambulance, cyber crime, consumer court, legal aid">
+    <title>Emergency Contacts Widget - भारतीय आपातकालीन संपर्क</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary: #e11d48;
+            --primary-dark: #be185d;
+            --secondary: #1e40af;
+            --accent: #7c3aed;
+            --success: #059669;
+            --warning: #d97706;
+            --surface: rgba(255, 255, 255, 0.95);
+            --glass: rgba(255, 255, 255, 0.1);
+            --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-heavy: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --border-radius: 16px;
+            --border-radius-sm: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 118, 117, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(240, 147, 251, 0.3) 0%, transparent 50%);
+            animation: backgroundFlow 20s ease-in-out infinite alternate;
+            z-index: -1;
+        }
+
+        @keyframes backgroundFlow {
+            0%, 100% { 
+                transform: scale(1) rotate(0deg);
+                opacity: 0.8;
+            }
+            50% { 
+                transform: scale(1.1) rotate(5deg);
+                opacity: 0.6;
+            }
+        }
+
+        .glass-morphism {
+            background: var(--surface);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow-heavy);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-morphism::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+        }
+
+        .contact-card {
+            background: rgba(255, 255, 255, 0.98);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: var(--border-radius-sm);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .contact-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            display: inline-block;
+        }
+        .icon-lg {
+            width: 2rem;
+            height: 2rem;
+        }
+        .icon-xl {
+            width: 3rem;
+            height: 3rem;
+        }
+
+        .hover-lift {
+            transition: var(--transition);
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px rgba(225, 29, 72, 0.3);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--secondary), #1d4ed8);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            font-size: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            transition: var(--transition);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success), #047857);
+            color: white;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .slide-in-up {
+            animation: slideInUp 0.5s ease-out forwards;
+        }
+
+        .slide-in-left {
+            animation: slideInLeft 0.4s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .tab-button {
+            position: relative;
+            padding: 1rem 1.5rem;
+            border: none;
+            background: transparent;
+            color: #64748b;
+            font-weight: 500;
+            border-radius: var(--border-radius-sm) var(--border-radius-sm) 0 0;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: fit-content;
+            white-space: nowrap;
+        }
+
+        .tab-button.active {
+            color: var(--primary);
+            background: rgba(225, 29, 72, 0.05);
+        }
+
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 2px 2px 0 0;
+        }
+
+        .tab-button:hover:not(.active) {
+            color: #475569;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .search-container {
+            position: relative;
+            margin: 1.5rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: var(--border-radius-sm);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+        }
+
+        .category-grid {
+            display: grid;
+            gap: 1rem;
+            padding: 1.5rem;
+        }
+
+        .status-badge {
+            background: linear-gradient(135deg, var(--success), #047857);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .expand-button {
+            padding: 0.5rem;
+            border: none;
+            background: rgba(100, 116, 139, 0.1);
+            border-radius: 50%;
+            color: #64748b;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .expand-button:hover {
+            background: rgba(100, 116, 139, 0.2);
+            transform: scale(1.1);
+        }
+
+        .detail-section {
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            border-radius: var(--border-radius-sm);
+            padding: 1rem;
+            margin-top: 1rem;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.5rem 0;
+        }
+
+        .detail-item:not(:last-child) {
+            border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+        }
+
+        .language-toggle {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem;
+            color: white;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .language-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .hindi-text {
+            font-family: 'Noto Sans Devanagari', 'Inter', sans-serif;
+        }
+
+        .emergency-banner {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            color: white;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .emergency-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255, 255, 255, 0.05) 10px,
+                rgba(255, 255, 255, 0.05) 20px
+            );
+            animation: moveStripes 20s linear infinite;
+        }
+
+        @keyframes moveStripes {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .footer-alert {
+            background: linear-gradient(135deg, #fef2f2, #fee2e2);
+            border-top: 3px solid #fca5a5;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .footer-alert::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #fca5a5, transparent);
+        }
+
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loading-spinner {
+            width: 3rem;
+            height: 3rem;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem 1.5rem;
+            color: #64748b;
+        }
+
+        .no-results-icon {
+            width: 4rem;
+            height: 4rem;
+            margin: 0 auto 1rem;
+            opacity: 0.5;
+        }
+
+        @media (max-width: 768px) {
+            .glass-morphism {
+                margin: 1rem;
+                border-radius: var(--border-radius-sm);
+            }
+            
+            .language-toggle {
+                top: 1rem;
+                right: 1rem;
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+            
+            .emergency-banner {
+                padding: 1.5rem;
+            }
+            
+            .tab-button {
+                padding: 0.75rem 1rem;
+                font-size: 0.875rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .focus-visible:focus {
+            outline: 3px solid rgba(59, 130, 246, 0.5);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Toggle -->
+    <button 
+        id="languageToggle" 
+        class="language-toggle focus-visible"
+        aria-label="Toggle language / भाषा बदलें"
+        title="Alt+L to toggle language"
+    >
+        <span id="langText">हिंदी</span>
+    </button>
+
+    <!-- Screen Reader Announcements -->
+    <div id="announcements" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+
+    <main id="app" role="main"></main>
+
+    <!-- Loading Indicator -->
+    <div id="loadingIndicator" class="loading-overlay" style="display: none;">
+        <div class="glass-morphism p-8 text-center">
+            <div class="loading-spinner mx-auto mb-4"></div>
+            <p class="text-white font-medium">Loading...</p>
+        </div>
+    </div>
+
+    <script>
+        // Language System
+        const translations = {
+            en: {
+                title: "Emergency Contacts",
+                subtitle: "Quick access to all important helplines and support services in India",
+                searchPlaceholder: "Search contacts, services, or numbers...",
+                emergencyText: "🚨 Emergency: For life-threatening emergencies, call 100 (Police), 101 (Fire), or 108 (Medical) immediately",
+                noResultsText: "No contacts found matching your search",
+                noResultsSubtext: "Try adjusting your search terms or browse different categories",
+                categories: {
+                    helplines: "Emergency Helplines",
+                    rbi: "RBI Regional Offices", 
+                    cyber: "Cyber Crime Reporting",
+                    consumer: "Consumer Courts",
+                    legal: "Legal Aid Services"
+                },
+                contacts: {
+                    police: { name: "Police Emergency", description: "Immediate police assistance for crimes and emergencies" },
+                    fire: { name: "Fire Emergency", description: "Fire brigade and rescue services" },
+                    ambulance: { name: "Medical Emergency", description: "Ambulance and emergency medical assistance" },
+                    disaster: { name: "Disaster Management", description: "Natural disaster response and assistance" },
+                    women: { name: "Women Helpline", description: "24x7 support for women in distress" },
+                    child: { name: "Child Helpline", description: "Support and protection for children in need" },
+                    senior: { name: "Senior Citizen Helpline", description: "Assistance and support for elderly citizens" }
+                }
+            },
+            hi: {
+                title: "आपातकालीन संपर्क",
+                subtitle: "भारत में सभी महत्वपूर्ण हेल्पलाइन और सहायता सेवाओं तक त्वरित पहुंच",
+                searchPlaceholder: "संपर्क, सेवाएं या नंबर खोजें...",
+                emergencyText: "🚨 आपातकाल: जीवन के लिए खतरनाक स्थितियों में तुरंत 100 (पुलिस), 101 (अग्निशमन), या 108 (चिकित्सा) पर कॉल करें",
+                noResultsText: "आपकी खोज से मेल खाने वाला कोई संपर्क नहीं मिला",
+                noResultsSubtext: "अपने खोज शब्दों को समायोजित करने या विभिन्न श्रेणियों को देखने का प्रयास करें",
+                categories: {
+                    helplines: "आपातकालीन हेल्पलाइन",
+                    rbi: "आरबीआई क्षेत्रीय कार्यालय",
+                    cyber: "साइबर अपराध रिपोर्टिंग", 
+                    consumer: "उपभोक्ता न्यायालय",
+                    legal: "कानूनी सहायता सेवाएं"
+                },
+                contacts: {
+                    police: { name: "पुलिस आपातकाल", description: "अपराध और आपातकाल के लिए तत्काल पुलिस सहायता" },
+                    fire: { name: "अग्निशमन आपातकाल", description: "दमकल और बचाव सेवाएं" },
+                    ambulance: { name: "चिकित्सा आपातकाल", description: "एम्बुलेंस और आपातकालीन चिकित्सा सहायता" },
+                    disaster: { name: "आपदा प्रबंधन", description: "प्राकृतिक आपदा प्रतिक्रिया और सहायता" },
+                    women: { name: "महिला हेल्पलाइन", description: "संकट में महिलाओं के लिए 24x7 सहायता" },
+                    child: { name: "बाल हेल्पलाइन", description: "जरूरतमंद बच्चों के लिए सहायता और सुरक्षा" },
+                    senior: { name: "वरिष्ठ नागरिक हेल्पलाइन", description: "बुजुर्ग नागरिकों के लिए सहायता और समर्थन" }
+                }
+            }
+        };
+
+        // State management
+        let state = {
+            activeCategory: 'helplines',
+            searchTerm: '',
+            expandedItems: {},
+            currentLanguage: 'en',
+            isLoading: false
+        };
+
+        // Emergency contacts data
+        const emergencyContacts = {
+            helplines: {
+                title: "Emergency Helplines",
+                icon: "siren",
+                color: "from-red-500 to-red-600",
+                contacts: [
+                    {
+                        id: 'police',
+                        name: "Police Emergency",
+                        number: "100",
+                        description: "Immediate police assistance for crimes and emergencies",
+                        available: "24/7",
+                        priority: "critical"
+                    },
+                    {
+                        id: 'fire',
+                        name: "Fire Emergency", 
+                        number: "101",
+                        description: "Fire brigade and rescue services",
+                        available: "24/7",
+                        priority: "critical"
+                    },
+                    {
+                        id: 'ambulance',
+                        name: "Medical Emergency",
+                        number: "108",
+                        description: "Ambulance and emergency medical assistance", 
+                        available: "24/7",
+                        priority: "critical"
+                    },
+                    {
+                        id: 'disaster',
+                        name: "Disaster Management",
+                        number: "108",
+                        description: "Natural disaster response and assistance",
+                        available: "24/7",
+                        priority: "high"
+                    },
+                    {
+                        id: 'women',
+                        name: "Women Helpline",
+                        number: "1091",
+                        description: "24x7 support for women in distress",
+                        available: "24/7",
+                        priority: "high"
+                    },
+                    {
+                        id: 'child',
+                        name: "Child Helpline",
+                        number: "1098", 
+                        description: "Support and protection for children in need",
+                        available: "24/7",
+                        priority: "high"
+                    },
+                    {
+                        id: 'senior',
+                        name: "Senior Citizen Helpline",
+                        number: "14567",
+                        description: "Assistance and support for elderly citizens",
+                        available: "24/7",
+                        priority: "medium"
+                    }
+                ]
+            },
+            rbi: {
+                title: "RBI Regional Offices",
+                icon: "landmark",
+                color: "from-blue-500 to-blue-600",
+                contacts: [
+                    {
+                        id: 'rbi-mumbai',
+                        name: "RBI Mumbai (Central Office)",
+                        number: "022-22661602",
+                        address: "Shahid Bhagat Singh Road, Fort, Mumbai - 400001",
+                        email: "helprbi@rbi.org.in",
+                        services: "Banking complaints, currency exchange issues",
+                        priority: "high"
+                    },
+                    {
+                        id: 'rbi-delhi',
+                        name: "RBI New Delhi",
+                        number: "011-23720926",
+                        address: "Sansad Marg, New Delhi - 110001",
+                        services: "Northern region banking issues",
+                        priority: "high"
+                    },
+                    {
+                        id: 'rbi-chennai',
+                        name: "RBI Chennai",
+                        number: "044-25390460",
+                        address: "Fort Glacis, Rajaji Salai, Chennai - 600001",
+                        services: "Southern region banking complaints",
+                        priority: "high"
+                    },
+                    {
+                        id: 'rbi-kolkata',
+                        name: "RBI Kolkata",
+                        number: "033-22305000",
+                        address: "15, Netaji Subhas Road, Kolkata - 700001",
+                        services: "Eastern region banking assistance",
+                        priority: "high"
+                    },
+                    {
+                        id: 'rbi-complaint',
+                        name: "RBI Complaint Portal",
+                        number: "14448",
+                        website: "cms.rbi.org.in",
+                        services: "Online banking complaints and grievances",
+                        available: "24/7",
+                        priority: "medium"
+                    }
+                ]
+            },
+            cyber: {
+                title: "Cyber Crime Reporting",
+                icon: "shield-check",
+                color: "from-purple-500 to-purple-600",
+                contacts: [
+                    {
+                        id: 'cyber-helpline',
+                        name: "National Cyber Crime Helpline",
+                        number: "1930",
+                        description: "Report cyber crimes and financial frauds",
+                        website: "cybercrime.gov.in",
+                        available: "24/7",
+                        priority: "critical"
+                    },
+                    {
+                        id: 'cyber-portal',
+                        name: "Cyber Crime Reporting Portal",
+                        website: "cybercrime.gov.in",
+                        description: "Online reporting of cyber crimes",
+                        services: "File FIR online, track complaint status",
+                        priority: "high"
+                    },
+                    {
+                        id: 'cyber-mumbai',
+                        name: "Mumbai Cyber Crime Cell",
+                        number: "022-26592880",
+                        address: "BKC, Mumbai Police HQ",
+                        services: "Mumbai region cyber crimes",
+                        priority: "medium"
+                    },
+                    {
+                        id: 'cyber-delhi',
+                        name: "Delhi Cyber Crime Cell",
+                        number: "011-23490250",
+                        address: "I.P. Estate, New Delhi",
+                        services: "Delhi region cyber crimes",
+                        priority: "medium"
+                    },
+                    {
+                        id: 'cert-in',
+                        name: "CERT-In (Incident Response)",
+                        number: "1800-11-4949",
+                        email: "incident@cert-in.org.in",
+                        services: "Computer security incidents",
+                        priority: "medium"
+                    }
+                ]
+            },
+            consumer: {
+                title: "Consumer Courts",
+                icon: "scale",
+                color: "from-green-500 to-green-600",
+                contacts: [
+                    {
+                        id: 'consumer-helpline',
+                        name: "National Consumer Helpline",
+                        number: "1800-11-4000",
+                        description: "Consumer complaints and guidance",
+                        website: "consumerhelpline.gov.in",
+                        available: "9:30 AM - 5:30 PM",
+                        priority: "high"
+                    },
+                    {
+                        id: 'consumer-mumbai',
+                        name: "Mumbai Consumer Court",
+                        address: "Cooper Hospital Compound, Vile Parle West, Mumbai - 400056",
+                        number: "022-26130328",
+                        services: "Consumer disputes up to ₹20 lakhs",
+                        priority: "medium"
+                    },
+                    {
+                        id: 'consumer-delhi',
+                        name: "Delhi Consumer Court",
+                        address: "Karkardooma Courts Complex, Delhi - 110032",
+                        number: "011-22048738",
+                        services: "Consumer protection cases",
+                        priority: "medium"
+                    },
+                    {
+                        id: 'consumer-chennai',
+                        name: "Chennai Consumer Court",
+                        address: "High Court Buildings, Chennai - 600104",
+                        number: "044-28278794",
+                        services: "Tamil Nadu consumer disputes",
+                        priority: "medium"
+                    },
+                    {
+                        id: 'edaakhil',
+                        name: "edaakhil Portal",
+                        website: "edaakhil.nic.in",
+                        description: "Online consumer complaint filing",
+                        services: "E-filing of consumer complaints",
+                        priority: "medium"
+                    }
+                ]
+            },
+            legal: {
+                title: "Legal Aid Services",
+                icon: "gavel",
+                color: "from-amber-500 to-amber-600",
+                contacts: [
+                    {
+                        id: 'legal-services',
+                        name: "National Legal Services Authority",
+                        number: "1800-258-8550",
+                        website: "nalsa.gov.in",
+                        description: "Free legal aid and advice",
+                        services: "Legal assistance for underprivileged",
+                        priority: "high"
+                    },
+                    {
+                        id: 'legal-mumbai',
+                        name: "Mumbai Legal Aid Committee",
+                        number: "022-22621168",
+                        address: "High Court of Bombay, Fort, Mumbai",
+                        services: "Free legal consultation",
+                        priority: "medium"
+                    },
+                    {
+                        id: 'legal-delhi',
+                        name: "Delhi Legal Services Authority",
+                        number: "011-23387532",
+                        address: "Delhi High Court, New Delhi",
+                        services: "Free legal aid in Delhi",
+                        priority: "medium"
+                    },
+                    {
+                        id: 'tele-law',
+                        name: "Tele-Law Service",
+                        number: "1800-345-3570",
+                        description: "Free legal advice over phone/video",
+                        services: "Remote legal consultation",
+                        priority: "medium"
+                    },
+                    {
+                        id: 'nyaya-bandhu',
+                        name: "Nyaya Bandhu App",
+                        description: "Mobile app for legal aid",
+                        services: "Find nearby legal aid centers, book appointments",
+                        priority: "low"
+                    }
+                ]
+            }
+        };
+
+        // Utility functions
+        function announceToScreenReader(message) {
+            const announcements = document.getElementById('announcements');
+            if (announcements) {
+                announcements.textContent = message;
+                setTimeout(() => {
+                    announcements.textContent = '';
+                }, 1000);
+            }
+        }
+
+        function showLoading() {
+            state.isLoading = true;
+            const indicator = document.getElementById('loadingIndicator');
+            if (indicator) indicator.style.display = 'flex';
+        }
+
+        function hideLoading() {
+            state.isLoading = false;
+            const indicator = document.getElementById('loadingIndicator');
+            if (indicator) indicator.style.display = 'none';
+        }
+
+        function toggleLanguage() {
+            const newLang = state.currentLanguage === 'en' ? 'hi' : 'en';
+            state.currentLanguage = newLang;
+            
+            document.documentElement.lang = newLang;
+            
+            const langText = document.getElementById('langText');
+            if (langText) {
+                langText.textContent = newLang === 'en' ? 'हिंदी' : 'English';
+            }
+            
+            announceToScreenReader(`Language changed to ${newLang === 'en' ? 'English' : 'Hindi'}`);
+            render();
+        }
+
+        function getTranslation(key) {
+            const keys = key.split('.');
+            let value = translations[state.currentLanguage];
+            
+            for (const k of keys) {
+                if (value && value[k]) {
+                    value = value[k];
+                } else {
+                    return translations.en[key] || key;
+                }
+            }
+            
+            return value || key;
+        }
+
+        function handleCall(number) {
+            if (number && number !== 'N/A') {
+                announceToScreenReader(`Calling ${number}`);
+                window.open(`tel:${number}`, '_self');
+            }
+        }
+
+        function throttle(func, limit) {
+            let inThrottle;
+            return function() {
+                const args = arguments;
+                const context = this;
+                if (!inThrottle) {
+                    func.apply(context, args);
+                    inThrottle = true;
+                    setTimeout(() => inThrottle = false, limit);
+                }
+            }
+        }
+
+        const throttledSearch = throttle((term) => {
+            state.searchTerm = term;
+            render();
+        }, 300);
+
+        function toggleExpanded(id) {
+            state.expandedItems[id] = !state.expandedItems[id];
+            announceToScreenReader(`Contact details ${state.expandedItems[id] ? 'expanded' : 'collapsed'}`);
+            render();
+        }
+
+        function setActiveCategory(category) {
+            state.activeCategory = category;
+            state.searchTerm = '';
+            const categoryName = getTranslation(`categories.${category}`);
+            announceToScreenReader(`Switched to ${categoryName} category`);
+            render();
+        }
+
+        function getFilteredContacts() {
+            return emergencyContacts[state.activeCategory].contacts.filter(contact => {
+                const searchLower = state.searchTerm.toLowerCase();
+                return (
+                    contact.name.toLowerCase().includes(searchLower) ||
+                    (contact.description && contact.description.toLowerCase().includes(searchLower)) ||
+                    (contact.services && contact.services.toLowerCase().includes(searchLower)) ||
+                    (contact.number && contact.number.includes(state.searchTerm))
+                );
+            });
+        }
+
+        function getPriorityColor(priority) {
+            switch (priority) {
+                case 'critical': return 'bg-red-500';
+                case 'high': return 'bg-orange-500';
+                case 'medium': return 'bg-blue-500';
+                case 'low': return 'bg-gray-500';
+                default: return 'bg-blue-500';
+            }
+        }
+
+        function getPriorityIcon(priority) {
+            switch (priority) {
+                case 'critical': return 'alert-triangle';
+                case 'high': return 'zap';
+                case 'medium': return 'info';
+                case 'low': return 'clock';
+                default: return 'info';
+            }
+        }
+
+        // Render functions
+        function renderHeader() {
+            const title = getTranslation('title');
+            const subtitle = getTranslation('subtitle');
+            
+            return `
+                <div class="emergency-banner">
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="p-3 bg-white/20 backdrop-blur-sm rounded-2xl">
+                                <i data-lucide="siren" class="icon-lg text-white" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <h1 class="text-3xl font-bold mb-2 ${state.currentLanguage === 'hi' ? 'hindi-text' : ''}">${title}</h1>
+                                <p class="text-lg opacity-90 ${state.currentLanguage === 'hi' ? 'hindi-text' : ''}">${subtitle}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderTabs() {
+            const categories = Object.entries(emergencyContacts).map(([key, category]) => ({
+                key,
+                title: getTranslation(`categories.${key}`),
+                icon: category.icon,
+                color: category.color,
+                count: category.contacts.length
+            }));
+
+            return `
+                <div class="border-b border-gray-200 bg-white/50 backdrop-blur-sm">
+                    <div class="flex overflow-x-auto" role="tablist" aria-label="Emergency contact categories">
+                        ${categories.map(category => `
+                            <button
+                                onclick="setActiveCategory('${category.key}')"
+                                class="tab-button ${state.activeCategory === category.key ? 'active' : ''} ${state.currentLanguage === 'hi' ? 'hindi-text' : ''}"
+                                role="tab"
+                                aria-selected="${state.activeCategory === category.key}"
+                                aria-controls="contact-panel"
+                            >
+                                <i data-lucide="${category.icon}" class="icon" aria-hidden="true"></i>
+                                <span class="font-medium">${category.title}</span>
+                                <span class="bg-gray-200 text-gray-700 text-xs px-2 py-1 rounded-full ml-2">
+                                    ${category.count}
+                                </span>
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderSearch() {
+            const placeholder = getTranslation('searchPlaceholder');
+            
+            return `
+                <div class="search-container">
+                    <div class="relative">
+                        <i data-lucide="search" class="search-icon icon" aria-hidden="true"></i>
+                        <input
+                            type="text"
+                            placeholder="${placeholder}"
+                            value="${state.searchTerm}"
+                            onkeyup="throttledSearch(this.value)"
+                            class="search-input ${state.currentLanguage === 'hi' ? 'hindi-text' : ''}"
+                            aria-label="Search emergency contacts"
+                            role="searchbox"
+                        />
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderContact(contact) {
+            const isExpanded = state.expandedItems[contact.id];
+            const hasExpandableContent = contact.address || contact.email || contact.website || contact.services;
+
+            const translatedContact = getTranslation(`contacts.${contact.id}`);
+            const displayName = (typeof translatedContact === 'object' && translatedContact.name) || contact.name;
+            const displayDescription = (typeof translatedContact === 'object' && translatedContact.description) || contact.description;
+
+            return `
+                <div class="contact-card hover-lift slide-in-up" role="article" aria-labelledby="contact-${contact.id}">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <h3 id="contact-${contact.id}" class="text-xl font-bold text-gray-900 ${state.currentLanguage === 'hi' ? 'hindi-text' : ''}">
+                                        ${displayName}
+                                    </h3>
+                                    ${contact.priority ? `
+                                        <div class="p-1 rounded-full ${getPriorityColor(contact.priority)}/20">
+                                            <i data-lucide="${getPriorityIcon(contact.priority)}" class="w-4 h-4 ${getPriorityColor(contact.priority).replace('bg-', 'text-')}" aria-hidden="true"></i>
+                                        </div>
+                                    ` : ''}
+                                </div>
+                                ${displayDescription ? `
+                                    <p class="text-gray-600 mb-4 leading-relaxed ${state.currentLanguage === 'hi' ? 'hindi-text' : ''}">${displayDescription}</p>
+                                ` : ''}
+                                
+                                <div class="flex flex-wrap gap-3 mb-4">
+                                    ${contact.number ? `
+                                        <button
+                                            onclick="handleCall('${contact.number}')"
+                                            class="btn-primary focus-visible"
+                                            aria-label="Call ${contact.number}"
+                                        >
+                                            <i data-lucide="phone" class="icon" aria-hidden="true"></i>
+                                            <span class="font-mono font-bold">${contact.number}</span>
+                                        </button>
+                                    ` : ''}
+                                    ${contact.available ? `
+                                        <div class="status-badge">
+                                            <i data-lucide="clock" class="w-3 h-3" aria-hidden="true"></i>
+                                            <span>${contact.available}</span>
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            </div>
+                            
+                            ${hasExpandableContent ? `
+                                <button
+                                    onclick="toggleExpanded('${contact.id}')"
+                                    class="expand-button focus-visible"
+                                    aria-expanded="${isExpanded}"
+                                    aria-controls="details-${contact.id}"
+                                    aria-label="${isExpanded ? 'Collapse' : 'Expand'} contact details"
+                                >
+                                    <i data-lucide="${isExpanded ? 'chevron-up' : 'chevron-down'}" class="w-5 h-5" aria-hidden="true"></i>
+                                </button>
+                            ` : ''}
+                        </div>
+
+                        ${isExpanded ? `
+                            <div id="details-${contact.id}" class="detail-section slide-in-left" role="region" aria-label="Contact details">
+                                ${contact.address ? `
+                                    <div class="detail-item">
+                                        <i data-lucide="map-pin" class="text-gray-500 mt-0.5 flex-shrink-0 icon" aria-hidden="true"></i>
+                                        <div>
+                                            <span class="font-medium text-gray-900">Address</span>
+                                            <p class="text-gray-700 mt-1">${contact.address}</p>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                                ${contact.email ? `
+                                    <div class="detail-item">
+                                        <i data-lucide="mail" class="text-gray-500 mt-0.5 flex-shrink-0 icon" aria-hidden="true"></i>
+                                        <div>
+                                            <span class="font-medium text-gray-900">Email</span>
+                                            <a href="mailto:${contact.email}" class="text-blue-600 hover:text-blue-800 hover:underline block mt-1 focus-visible">
+                                                ${contact.email}
+                                            </a>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                                ${contact.website ? `
+                                    <div class="detail-item">
+                                        <i data-lucide="globe" class="text-gray-500 mt-0.5 flex-shrink-0 icon" aria-hidden="true"></i>
+                                        <div>
+                                            <span class="font-medium text-gray-900">Website</span>
+                                            <a 
+                                                href="${contact.website.startsWith('http') ? contact.website : `https://${contact.website}`}"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                class="text-blue-600 hover:text-blue-800 hover:underline block mt-1 focus-visible"
+                                                aria-label="Visit ${contact.website} (opens in new tab)"
+                                            >
+                                                ${contact.website}
+                                            </a>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                                ${contact.services ? `
+                                    <div class="detail-item">
+                                        <i data-lucide="list" class="text-gray-500 mt-0.5 flex-shrink-0 icon" aria-hidden="true"></i>
+                                        <div>
+                                            <span class="font-medium text-gray-900">Services</span>
+                                            <p class="text-gray-700 mt-1">${contact.services}</p>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderContactList() {
+            const filteredContacts = getFilteredContacts();
+            const noResultsText = getTranslation('noResultsText');
+            const noResultsSubtext = getTranslation('noResultsSubtext');
+
+            if (filteredContacts.length === 0) {
+                return `
+                    <div class="no-results">
+                        <i data-lucide="search-x" class="no-results-icon" aria-hidden="true"></i>
+                        <h3 class="text-xl font-semibold text-gray-700 mb-2 ${state.currentLanguage === 'hi' ? 'hindi-text' : ''}">${noResultsText}</h3>
+                        <p class="text-gray-500 ${state.currentLanguage === 'hi' ? 'hindi-text' : ''}">${noResultsSubtext}</p>
+                    </div>
+                `;
+            }
+
+            return `
+                <div class="category-grid" id="contact-panel" role="tabpanel" aria-label="${getTranslation(`categories.${state.activeCategory}`)} contacts">
+                    ${filteredContacts.map(contact => renderContact(contact)).join('')}
+                </div>
+            `;
+        }
+
+        function renderFooter() {
+            const emergencyText = getTranslation('emergencyText');
+            
+            return `
+                <div class="footer-alert" role="complementary" aria-label="Emergency information">
+                    <div class="flex items-start gap-4 text-red-800">
+                        <div class="p-2 bg-red-100 rounded-full flex-shrink-0">
+                            <i data-lucide="alert-triangle" class="w-6 h-6 text-red-600" aria-hidden="true"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-red-900 mb-2 ${state.currentLanguage === 'hi' ? 'hindi-text' : ''}">Important Notice</h4>
+                            <p class="text-red-800 leading-relaxed ${state.currentLanguage === 'hi' ? 'hindi-text' : ''}">
+                                ${emergencyText}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function render() {
+            const app = document.getElementById('app');
+            if (!app) return;
+            
+            showLoading();
+            
+            setTimeout(() => {
+                app.innerHTML = `
+                    <div class="max-w-6xl mx-auto glass-morphism">
+                        ${renderHeader()}
+                        ${renderTabs()}
+                        ${renderSearch()}
+                        ${renderContactList()}
+                        ${renderFooter()}
+                    </div>
+                `;
+
+                if (window.lucide) {
+                    lucide.createIcons();
+                }
+                
+                hideLoading();
+                
+                const firstFocusableElement = app.querySelector('button, input, a');
+                if (firstFocusableElement && document.activeElement === document.body) {
+                    firstFocusableElement.focus();
+                }
+            }, 100);
+        }
+
+        // Keyboard navigation
+        function setupKeyboardNavigation() {
+            document.addEventListener('keydown', (e) => {
+                if (e.altKey && e.key === 'l') {
+                    e.preventDefault();
+                    toggleLanguage();
+                }
+                
+                if (e.key === 'Escape') {
+                    const searchInput = document.querySelector('.search-input');
+                    if (searchInput && searchInput.value) {
+                        searchInput.value = '';
+                        state.searchTerm = '';
+                        render();
+                        announceToScreenReader('Search cleared');
+                    }
+                }
+                
+                if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                    const tabs = document.querySelectorAll('[role="tab"]');
+                    const currentTab = document.querySelector('[role="tab"][aria-selected="true"]');
+                    const currentIndex = Array.from(tabs).indexOf(currentTab);
+                    
+                    if (currentIndex !== -1) {
+                        e.preventDefault();
+                        let newIndex;
+                        
+                        if (e.key === 'ArrowRight') {
+                            newIndex = (currentIndex + 1) % tabs.length;
+                        } else {
+                            newIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+                        }
+                        
+                        tabs[newIndex].click();
+                        tabs[newIndex].focus();
+                    }
+                }
+            });
+        }
+
+        // Initialize
+        function initialize() {
+            setupKeyboardNavigation();
+            
+            const languageToggle = document.getElementById('languageToggle');
+            if (languageToggle) {
+                languageToggle.addEventListener('click', toggleLanguage);
+            }
+            
+            render();
+            
+            setTimeout(() => {
+                announceToScreenReader('Emergency contacts widget loaded and ready');
+            }, 500);
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initialize);
+        } else {
+            initialize();
+        }
+    </script>
+</body>
+</html>
+                

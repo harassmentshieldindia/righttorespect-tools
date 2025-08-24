@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Recovery Harassment Protection</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .nav {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-item {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .nav-item.active {
+            border-bottom: 3px solid #667eea;
+            color: #667eea;
+        }
+
+        .nav-item:hover {
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+
+        .content-section {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-icon {
+            width: 24px;
+            height: 24px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section-content {
+            padding: 2rem;
+        }
+
+        /* FAQ Section Styles */
+        .faq-container {
+            max-width: 100%;
+            margin: 20px 0;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        .faq-header {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .faq-header h2 {
+            margin: 0 0 10px 0;
+            font-size: 1.8rem;
+        }
+
+        .faq-header p {
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        .faq-search {
+            padding: 20px;
+            border-bottom: 1px solid #ecf0f1;
+            background: #f8f9fa;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #bdc3c7;
+            border-radius: 25px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .faq-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .category-btn {
+            background: white;
+            border: 2px solid #3498db;
+            color: #3498db;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: #3498db;
+            color: white;
+        }
+
+        .faq-content {
+            padding: 20px;
+        }
+
+        .faq-item {
+            margin-bottom: 15px;
+            border: 1px solid #ecf0f1;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item.hidden {
+            display: none;
+        }
+
+        .faq-question {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            color: #2c3e50;
+            transition: background-color 0.3s ease;
+            user-select: none;
+        }
+
+        .faq-question:hover {
+            background: #e9ecef;
+        }
+
+        .faq-question.active {
+            background: #3498db;
+            color: white;
+        }
+
+        .faq-icon {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-question.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .faq-answer.active {
+            padding: 20px;
+            max-height: 500px;
+        }
+
+        .faq-answer p {
+            margin: 0 0 10px 0;
+            line-height: 1.6;
+            color: #34495e;
+        }
+
+        .faq-answer ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .faq-answer li {
+            margin: 5px 0;
+            color: #34495e;
+        }
+
+        .highlight-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        .emergency-box {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            color: #721c24;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            color: #155724;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px 20px;
+            color: #7f8c8d;
+            display: none;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .faq-container {
+                margin: 10px 0;
+                border-radius: 10px;
+            }
+            
+            .faq-categories {
+                justify-content: center;
+            }
+            
+            .category-btn {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+            
+            .faq-question {
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+            
+            .faq-answer.active {
+                padding: 15px;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-item {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        .footer {
+            background: #1e3c72;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <h1>Financial Recovery Harassment Protection</h1>
+            <p>Resources and tools to protect yourself from harassment by recovery agents</p>
+        </div>
+    </div>
+
+    <div class="nav">
+        <div class="nav-container">
+            <div class="nav-item active" data-target="report-generator">Incident Report</div>
+            <div class="nav-item" data-target="complaint-generator">Complaint Generator</div>
+            <div class="nav-item" data-target="legal-templates">Legal Templates</div>
+            <div class="nav-item" data-target="resources">Resources</div>
+            <div class="nav-item" data-target="rights">Your Rights</div>
+            <div class="nav-item" data-target="prevention">Prevention Tips</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Report Generator Section -->
+        <div class="content-section active" id="report-generator">
+            <div class="section-title">
+                <div class="section-icon">!</div>
+                <span>Financial Harassment Incident Report Generator</span>
+            </div>
+            <div class="section-content">
+                <p>Use this tool to document harassment incidents for legal action and RBI compliance. Your report will include all necessary details to file a formal complaint.</p>
+                
+                <div class="form-container">
+                    <!-- Form content would go here -->
+                    <p>Form content would be loaded here...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Other sections would go here -->
+        <div class="content-section" id="complaint-generator">
+            <div class="section-title">
+                <div class="section-icon">📞</div>
+                <span>Complaint Generator & Contact Form</span>
+            </div>
+            <div class="section-content">
+                <p>Generate professional complaints and connect with legal experts.</p>
+                <!-- Complaint generator content would go here -->
+            </div>
+        </div>
+
+        <div class="content-section" id="legal-templates">
+            <div class="section-title">
+                <div class="section-icon">📋</div>
+                <span>Legal Document Templates</span>
+            </div>
+            <div class="section-content">
+                <p>Ready-to-use legal formats for harassment complaints & legal proceedings.</p>
+                <!-- Legal templates content would go here -->
+            </div>
+        </div>
+
+        <div class="content-section" id="resources">
+            <div class="section-title">
+                <div class="section-icon">ℹ</div>
+                <span>Resources & Help</span>
+            </div>
+            <div class="section-content">
+                <p>Where to get help if you're experiencing harassment from recovery agents.</p>
+                <!-- Resources content would go here -->
+            </div>
+        </div>
+
+        <div class="content-section" id="rights">
+            <div class="section-title">
+                <div class="section-icon">⚖</div>
+                <span>Your Rights Against Harassment</span>
+            </div>
+            <div class="section-content">
+                <p>Know your legal rights against harassment by recovery agents.</p>
+                <!-- Rights content would go here -->
+            </div>
+        </div>
+
+        <div class="content-section" id="prevention">
+            <div class="section-title">
+                <div class="section-icon">🔒</div>
+                <span>Prevention Tips</span>
+            </div>
+            <div class="section-content">
+                <p>How to prevent and handle harassment from recovery agents.</p>
+                <!-- Prevention tips content would go here -->
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="faq-container">
+            <div class="faq-header">
+                <h2>💬 Frequently Asked Questions</h2>
+                <p>Quick answers to common questions about debt collection harassment</p>
+            </div>
+            
+            <div class="faq-search">
+                <input type="text" id="faqSearch" class="search-box" placeholder="🔍 Search your question here..." onkeyup="searchFAQ()">
+            </div>
+            
+            <div class="faq-categories">
+                <button class="category-btn active" onclick="filterCategory('all')">🏠 All</button>
+                <button class="category-btn" onclick="filterCategory('rights')">⚖️ Rights</button>
+                <button class="category-btn" onclick="filterCategory('harassment')">📞 Harassment</button>
+                <button class="category-btn" onclick="filterCategory('complaints')">📝 Complaints</button>
+                <button class="category-btn" onclick="filterCategory('legal')">🏛️ Legal</button>
+                <button class="category-btn" onclick="filterCategory('emergency')">🚨 Emergency</button>
+            </div>
+            
+            <div class="faq-content">
+                <!-- Rights Category -->
+                <div class="faq-item" data-category="rights">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <span>⚖️ What are my basic rights as a borrower?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>As a borrower, you have fundamental rights protected by RBI guidelines:</p>
+                        <ul>
+                            <li><strong>Right to dignity:</strong> No abusive language or intimidation</li>
+                            <li><strong>Right to privacy:</strong> No sharing of loan details with third parties</li>
+                            <li><strong>Right to reasonable communication:</strong> Calls only 8 AM-7 PM, max 3 per week</li>
+                            <li><strong>Right to fair treatment:</strong> Professional conduct from recovery agents</li>
+                            <li><strong>Right to complain:</strong> File complaints against harassment</li>
+                        </ul>
+                        <div class="success-box">
+                            <strong>Remember:</strong> You must repay your loans, but harassment is never acceptable!
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Harassment Category -->
+                <div class="faq-item" data-category="harassment">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <span>📞 How many calls can recovery agents make to me?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>According to RBI guidelines:</p>
+                        <ul>
+                            <li><strong>Maximum 3 calls per week</strong> directly to you</li>
+                            <li><strong>Only between 8 AM to 7 PM</strong> on working days</li>
+                            <li><strong>No calls on Sundays and public holidays</strong></li>
+                            <li><strong>Cannot call your family/friends</strong> repeatedly</li>
+                        </ul>
+                        <div class="emergency-box">
+                            <strong>Violation:</strong> If they call more than this, it's harassment - file a complaint!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="harassment">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <span>🤬 Can recovery agents use abusive language?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Absolutely NO!</strong> Recovery agents cannot:</p>
+                        <ul>
+                            <li>Use foul, abusive, or threatening language</li>
+                            <li>Shout, scream, or intimidate you</li>
+                            <li>Make personal attacks or insults</li>
+                            <li>Use discriminatory language</li>
+                            <li>Threaten violence or harm</li>
+                        </ul>
+                        <div class="emergency-box">
+                            <strong>Action:</strong> If this happens, record the call (if legal) and file police complaint immediately!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="harassment">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <span>👨‍👩‍👧‍👦 Can they call my family members?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Limited contact is allowed, but with strict rules:</p>
+                        <ul>
+                            <li><strong>Only if you're unreachable</strong> for reasonable period</li>
+                            <li><strong>Cannot discuss loan details</strong> with family</li>
+                            <li><strong>Cannot harass or threaten</strong> family members</li>
+                            <li><strong>Cannot call repeatedly</strong> to same family member</li>
+                            <li><strong>Must maintain dignity</strong> and professional conduct</li>
+                        </ul>
+                        <div class="highlight-box">
+                            <strong>Tip:</strong> Always answer calls from your lender to prevent family contact!
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Complaints Category -->
+                <div class="faq-item" data-category="complaints">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <span>📝 How do I file a complaint against harassment?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Follow this step-by-step process:</p>
+                        <ul>
+                            <li><strong>Step 1:</strong> Document everything (calls, messages, dates)</li>
+                            <li><strong>Step 2:</strong> Complain to your bank's grievance officer first</li>
+                            <li><strong>Step 3:</strong> Call RBI Ombudsman at <strong>14448</strong></li>
+                            <li><strong>Step 4:</strong> File online at cms.rbi.org.in</li>
+                            <li><strong>Step 5:</strong> Police complaint if threatened (call 100)</li>
+                        </ul>
+                        <div class="success-box">
+                            <strong>Free Service:</strong> All RBI and police complaints are completely free!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="complaints">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <span>🕐 How long does RBI take to resolve complaints?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>RBI complaint timeline:</p>
+                        <ul>
+                            <li><strong>Acknowledgment:</strong> Within 7 days</li>
+                            <li><strong>Bank's response:</strong> 30 days to bank</li>
+                            <li><strong>Final resolution:</strong> Usually within 60 days</li>
+                            <li><strong>Complex cases:</strong> May take up to 90 days</li>
+                        </ul>
+                        <div class="highlight-box">
+                            <strong>Important:</strong> Keep following up if no response within timeline!
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Legal Category -->
+                <div class="faq-item" data-category="legal">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <span>⚖️ Is harassment a criminal offense?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Yes!</strong> Harassment can be criminal under:</p>
+                        <ul>
+                            <li><strong>IPC Section 503:</strong> Criminal intimidation</li>
+                            <li><strong>IPC Section 506:</strong> Punishment for criminal intimidation</li>
+                            <li><strong>IPC Section 504:</strong> Intentional insult</li>
+                            <li><strong>Various state laws:</strong> Additional protections</li>
+                        </ul>
+                        <div class="emergency-box">
+                            <strong>Action:</strong> File FIR at police station for criminal harassment!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="legal">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <span>💰 Can I get compensation for harassment?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Yes!</strong> You can get compensation through:</p>
+                        <ul>
+                            <li><strong>Banking Ombudsman:</strong> Up to ₹20 lakhs compensation</li>
+                            <li><strong>Consumer Court:</strong> Compensation for mental harassment</li>
+                            <li><strong>Civil Court:</strong> Damages for defamation/harassment</li>
+                            <li><strong>Criminal Court:</strong> Punishment for offenders</li>
+                        </ul>
+                        <div class="success-box">
+                            <strong>Recent Cases:</strong> Banks have paid lakhs in compensation for harassment!
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Emergency Category -->
+                <div class="faq-item" data-category="emergency">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <span>🚨 What should I do if I'm threatened with violence?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Immediate action required:</strong></p>
+                        <ul>
+                            <li><strong>Call Police immediately:</strong> Dial 100</li>
+                            <li><strong>Don't argue or provoke</strong> the caller</li>
+                            <li><strong>Record the threat</strong> if possible</li>
+                            <li><strong>Inform family members</strong> for safety</li>
+                            <li><strong>File written complaint</strong> at police station</li>
+                            <li><strong>Contact your bank</strong> to report the incident</li>
+                        </ul>
+                        <div class="emergency-box">
+                            <strong>Emergency:</strong> Your safety comes first - don't hesitate to call police!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="emergency">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <span>📱 Should I record harassment calls?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Recording calls can be valuable evidence:</p>
+                        <ul>
+                            <li><strong>Check state laws:</strong> Some states require consent</li>
+                            <li><strong>Use call recording apps</strong> on smartphones</li>
+                            <li><strong>Keep original recordings</strong> safe</li>
+                            <li><strong>Make transcripts</strong> of important calls</li>
+                            <li><strong>Backup on cloud storage</strong> for safety</li>
+                        </ul>
+                        <div class="highlight-box">
+                            <strong>Legal Tip:</strong> Even if recording isn't admissible, it helps you remember exact details!
+                        </div>
+                    </div>
+                </div>
+
+                <!-- General Questions -->
+                <div class="faq-item" data-category="rights">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <span>💳 Can I stop paying EMIs if harassed?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>No, you cannot stop EMIs due to harassment.</strong></p>
+                        <ul>
+                            <li>Harassment doesn't cancel your loan obligation</li>
+                            <li>Stopping EMIs will worsen your credit score</li>
+                            <li>Additional penalties and interest will apply</li>
+                            <li>Legal action can still be taken by lender</li>
+                        </ul>
+                        <div class="highlight-box">
+                            <strong>Better Option:</strong> File harassment complaint while continuing to negotiate repayment!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="legal">
+                    <div class="faq-question" onclick="toggleAnswer(this)">
+                        <span>🏠 Can recovery agents enter my house forcibly?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Absolutely NOT!</strong> They cannot:</p>
+                        <ul>
+                            <li>Enter your house without permission</li>
+                            <li>Break locks or force entry</li>
+                            <li>Seize property without court order</li>
+                            <li>Stay on your property if asked to leave</li>
+                            <li>Threaten to take your belongings</li>
+                        </ul>
+                        <div class="emergency-box">
+                            <strong>If this happens:</strong> Call police immediately (100) - this is criminal trespass!
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="no-results" id="noResults">
+                    <h3>🔍 No results found</h3>
+                    <p>Try different keywords or browse categories above</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>© 2023 Financial Recovery Harassment Protection | Disclaimer: This tool provides general information and should not be considered legal advice.</p>
+    </div>
+
+    <script>
+        // Navigation functionality
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                // Update active nav item
+                document.querySelectorAll('.nav-item').forEach(nav => {
+                    nav.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Show corresponding section
+                const targetId = this.getAttribute('data-target');
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.getElementById(targetId).classList.add('active');
+                
+                // Scroll to top of the section
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // FAQ functionality
+        let currentCategory = 'all';
+
+        function toggleAnswer(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('.faq-icon');
+            
+            // Close all other answers
+            document.querySelectorAll('.faq-question').forEach(q => {
+                if (q !== element) {
+                    q.classList.remove('active');
+                    q.nextElementSibling.classList.remove('active');
+                    q.querySelector('.faq-icon').textContent = '+';
+                }
+            });
+            
+            // Toggle current answer
+            if (answer.classList.contains('active')) {
+                element.classList.remove('active');
+                answer.classList.remove('active');
+                icon.textContent = '+';
+            } else {
+                element.classList.add('active');
+                answer.classList.add('active');
+                icon.textContent = '×';
+            }
+        }
+
+        function filterCategory(category) {
+            currentCategory = category;
+            
+            // Update active category button
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Filter FAQ items
+            const faqItems = document.querySelectorAll('.faq-item');
+            let visibleCount = 0;
+            
+            faqItems.forEach(item => {
+                if (category === 'all' || item.dataset.category === category) {
+                    item.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    item.classList.add('hidden');
+                    // Close answer if it's open
+                    const question = item.querySelector('.faq-question');
+                    const answer = item.querySelector('.faq-answer');
+                    question.classList.remove('active');
+                    answer.classList.remove('active');
+                    question.querySelector('.faq-icon').textContent = '+';
+                }
+            });
+            
+            // Show/hide no results message
+            document.getElementById('noResults').style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+
+        function searchFAQ() {
+            const searchTerm = document.getElementById('faqSearch').value.toLowerCase();
+            const faqItems = document.querySelectorAll('.faq-item');
+            let visibleCount = 0;
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question span:first-child').textContent.toLowerCase();
+                const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+                
+                if (searchTerm === '' || question.includes(searchTerm) || answer.includes(searchTerm)) {
+                    if (currentCategory === 'all' || item.dataset.category === currentCategory) {
+                        item.classList.remove('hidden');
+                        visibleCount++;
+                    }
+                } else {
+                    item.classList.add('hidden');
+                    // Close answer if it's open
+                    const questionEl = item.querySelector('.faq-question');
+                    const answerEl = item.querySelector('.faq-answer');
+                    questionEl.classList.remove('active');
+                    answerEl.classList.remove('active');
+                    questionEl.querySelector('.faq-icon').textContent = '+';
+                }
+            });
+            
+            // Show/hide no results message
+            document.getElementById('noResults').style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+
+        // Auto-close answers when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.faq-item')) {
+                document.querySelectorAll('.faq-question.active').forEach(question => {
+                    question.classList.remove('active');
+                    question.nextElementSibling.classList.remove('active');
+                    question.querySelector('.faq-icon').textContent = '+';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

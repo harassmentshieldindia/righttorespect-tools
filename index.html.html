@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaint Generator & Contact Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .form-container {
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 16px;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-item:hover {
+            background: #e9ecef;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-right: 10px;
+            accent-color: #667eea;
+        }
+
+        .priority-selector {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .priority-option {
+            flex: 1;
+            position: relative;
+        }
+
+        .priority-option input[type="radio"] {
+            display: none;
+        }
+
+        .priority-label {
+            display: block;
+            padding: 15px;
+            text-align: center;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .priority-low .priority-label {
+            border-color: #28a745;
+            color: #28a745;
+        }
+
+        .priority-medium .priority-label {
+            border-color: #ffc107;
+            color: #856404;
+        }
+
+        .priority-high .priority-label {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+
+        .priority-option input[type="radio"]:checked + .priority-label {
+            background: currentColor;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+            margin-left: 15px;
+        }
+
+        .generated-complaint {
+            margin-top: 30px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+            display: none;
+        }
+
+        .generated-complaint h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .complaint-text {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.8;
+            white-space: pre-wrap;
+        }
+
+        .action-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-copy, .btn-download {
+            padding: 10px 20px;
+            font-size: 14px;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 5px solid #28a745;
+            display: none;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .info-box h4 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+
+        .phone-input {
+            display: flex;
+            gap: 10px;
+        }
+
+        .country-code {
+            flex: 0 0 120px;
+        }
+
+        .phone-number {
+            flex: 1;
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .priority-selector {
+                flex-direction: column;
+            }
+
+            .phone-input {
+                flex-direction: column;
+            }
+
+            .country-code {
+                flex: 1;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📞 Complaint Generator & Contact Form</h1>
+            <p>Generate professional complaints & connect with legal experts</p>
+        </div>
+
+        <div class="form-container">
+            <div class="info-box">
+                <h4>🛡️ How This Helps You:</h4>
+                <p><strong>Professional Complaints:</strong> Auto-generates legally formatted complaints with proper references to RBI guidelines and IPC sections.</p>
+                <p><strong>Multiple Uses:</strong> Use generated complaints for RBI Ombudsman, Police, Consumer Court, or Bank Grievance Cell.</p>
+                <p><strong>Expert Support:</strong> Our team reviews serious cases and provides guidance on next steps.</p>
+            </div>
+
+            <form id="complaintForm">
+                <!-- Personal Information -->
+                <div class="form-group">
+                    <label for="fullName">Full Name <span class="required">*</span></label>
+                    <input type="text" id="fullName" class="form-control" required placeholder="Enter your full name">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address <span class="required">*</span></label>
+                    <input type="email" id="email" class="form-control" required placeholder="your.email@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label>Your Phone Number <span class="required">*</span></label>
+                    <div class="phone-input">
+                        <select id="countryCode" class="form-control country-code">
+                            <option value="+91">+91 (India)</option>
+                            <option value="+1">+1 (USA)</option>
+                            <option value="+44">+44 (UK)</option>
+                            <option value="+971">+971 (UAE)</option>
+                            <option value="+965">+965 (Kuwait)</option>
+                            <option value="+966">+966 (Saudi)</option>
+                        </select>
+                        <input type="tel" id="yourPhone" class="form-control phone-number" required placeholder="Your phone number">
+                    </div>
+                </div>
+
+                <!-- Harassment Details -->
+                <div class="form-group">
+                    <label for="bankName">Bank/NBFC/Lender Name <span class="required">*</span></label>
+                    <input type="text" id="bankName" class="form-control" required placeholder="e.g., HDFC Bank, Bajaj Finserv, etc.">
+                </div>
+
+                <div class="form-group">
+                    <label for="loanType">Loan Type</label>
+                    <select id="loanType" class="form-control">
+                        <option value="">Select loan type</option>
+                        <option value="Personal Loan">Personal Loan</option>
+                        <option value="Credit Card">Credit Card</option>
+                        <option value="Home Loan">Home Loan</option>
+                        <option value="Car Loan">Car Loan</option>
+                        <option value="Business Loan">Business Loan</option>
+                        <option value="Gold Loan">Gold Loan</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="harassmentPhone">Harassment Phone Number(s) <span class="required">*</span></label>
+                    <input type="text" id="harassmentPhone" class="form-control" required placeholder="Phone numbers that harassed you (separate multiple with commas)">
+                </div>
+
+                <div class="form-group">
+                    <label for="agentName">Recovery Agent/Caller Name (if known)</label>
+                    <input type="text" id="agentName" class="form-control" placeholder="Name of the person who called">
+                </div>
+
+                <!-- Types of Harassment -->
+                <div class="form-group">
+                    <label>Types of Harassment Faced <span class="required">*</span></label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="abusive" name="harassment" value="Abusive Language">
+                            <label for="abusive">🤬 Abusive/Threatening Language</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="excessive" name="harassment" value="Excessive Calls">
+                            <label for="excessive">📞 Excessive Calls (More than 3/week)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="family" name="harassment" value="Family Contact">
+                            <label for="family">👨‍👩‍👧‍👦 Contacted Family/Friends</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="workplace" name="harassment" value="Workplace Contact">
+                            <label for="workplace">🏢 Contacted Workplace/Colleagues</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="timing" name="harassment" value="Wrong Timing">
+                            <label for="timing">⏰ Calls Outside 8 AM - 8 PM</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="physical" name="harassment" value="Physical Threats">
+                            <label for="physical">⚠️ Threats of Physical Violence</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="public" name="harassment" value="Public Shaming">
+                            <label for="public">📢 Threats to Publish Name</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="false" name="harassment" value="False Legal Threats">
+                            <label for="false">⚖️ False Legal Threats</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Incident Details -->
+                <div class="form-group">
+                    <label for="incidentDate">Most Recent Incident Date</label>
+                    <input type="date" id="incidentDate" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="priority">Priority Level <span class="required">*</span></label>
+                    <div class="priority-selector">
+                        <div class="priority-option priority-low">
+                            <input type="radio" id="low" name="priority" value="Low" required>
+                            <label for="low" class="priority-label">🟢 Low Priority<br><small>Minor harassment</small></label>
+                        </div>
+                        <div class="priority-option priority-medium">
+                            <input type="radio" id="medium" name="priority" value="Medium" required>
+                            <label for="medium" class="priority-label">🟡 Medium Priority<br><small>Regular harassment</small></label>
+                        </div>
+                        <div class="priority-option priority-high">
+                            <input type="radio" id="high" name="priority" value="High" required>
+                            <label for="high" class="priority-label">🔴 High Priority<br><small>Severe threats/abuse</small></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Detailed Description of Harassment <span class="required">*</span></label>
+                    <textarea id="description" class="form-control" rows="6" required placeholder="Describe the harassment in detail: What exactly was said? When did it happen? How many times? Include specific threats, abusive language, or inappropriate behavior. Be as specific as possible."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="evidence">Evidence Available</label>
+                    <textarea id="evidence" class="form-control" rows="3" placeholder="List any evidence you have: call recordings, screenshots, witness names, etc."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="witnesses">Witness Information</label>
+                    <textarea id="witnesses" class="form-control" rows="2" placeholder="Names and contact details of any witnesses"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="previousComplaints">Previous Complaints Filed</label>
+                    <textarea id="previousComplaints" class="form-control" rows="2" placeholder="Have you already filed complaints anywhere? Mention details."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="additionalInfo">Additional Information</label>
+                    <textarea id="additionalInfo" class="form-control" rows="3" placeholder="Any other relevant information"></textarea>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <button type="submit" class="btn">🚀 Generate Professional Complaint</button>
+                    <button type="button" class="btn btn-secondary" onclick="resetForm()">🔄 Reset Form</button>
+                </div>
+            </form>
+
+            <div id="generatedComplaint" class="generated-complaint">
+                <h3>📄 Your Generated Complaint</h3>
+                <div id="complaintText" class="complaint-text"></div>
+                <div class="action-buttons">
+                    <button class="btn btn-copy" onclick="copyComplaint()">📋 Copy Complaint</button>
+                    <button class="btn btn-download" onclick="downloadComplaint()">💾 Download as PDF</button>
+                    <button class="btn btn-secondary" onclick="emailComplaint()">📧 Email to Expert</button>
+                </div>
+            </div>
+
+            <div id="successMessage" class="success-message">
+                <strong>✅ Success!</strong> Your complaint has been generated and copied to clipboard.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let generatedComplaintText = '';
+        
+        document.getElementById('complaintForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            generateComplaint();
+        });
+
+        function generateComplaint() {
+            // Get form data
+            const formData = {
+                fullName: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                countryCode: document.getElementById('countryCode').value,
+                yourPhone: document.getElementById('yourPhone').value,
+                bankName: document.getElementById('bankName').value,
+                loanType: document.getElementById('loanType').value,
+                harassmentPhone: document.getElementById('harassmentPhone').value,
+                agentName: document.getElementById('agentName').value,
+                incidentDate: document.getElementById('incidentDate').value,
+                priority: document.querySelector('input[name="priority"]:checked')?.value || 'Medium',
+                description: document.getElementById('description').value,
+                evidence: document.getElementById('evidence').value,
+                witnesses: document.getElementById('witnesses').value,
+                previousComplaints: document.getElementById('previousComplaints').value,
+                additionalInfo: document.getElementById('additionalInfo').value
+            };
+
+            // Get harassment types
+            const harassmentTypes = [];
+            document.querySelectorAll('input[name="harassment"]:checked').forEach(checkbox => {
+                harassmentTypes.push(checkbox.value);
+            });
+
+            // Generate complaint ID
+            const complaintId = 'CMP-' + Date.now().toString().slice(-8);
+            const currentDate = new Date().toLocaleDateString('en-IN');
+            const currentTime = new Date().toLocaleTimeString('en-IN');
+
+            // Generate complaint text
+            generatedComplaintText = generateComplaintText(formData, harassmentTypes, complaintId, currentDate, currentTime);
+
+            // Display the complaint
+            document.getElementById('complaintText').textContent = generatedComplaintText;
+            document.getElementById('generatedComplaint').style.display = 'block';
+
+            // Scroll to complaint
+            document.getElementById('generatedComplaint').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function generateComplaintText(data, harassmentTypes, complaintId, date, time) {
+            const harassmentList = harassmentTypes.map(type => `• ${type}`).join('\n');
+            const legalSections = getLegalSections(harassmentTypes);
+            
+            return `COMPLAINT AGAINST HARASSMENT BY RECOVERY AGENTS
+
+Complaint ID: ${complaintId}
+Date: ${date}
+Time: ${time}
+
+To,
+The Grievance Redressal Officer / RBI Ombudsman / Police Station
+
+Subject: Complaint against harassment and illegal recovery practices by ${data.bankName}
+
+Respected Sir/Madam,
+
+I am writing to file a formal complaint against the harassment and illegal recovery practices employed by ${data.bankName} and their recovery agents.
+
+COMPLAINANT DETAILS:
+Name: ${data.fullName}
+Email: ${data.email}
+Phone: ${data.countryCode} ${data.yourPhone}
+Date: ${date}
+
+RESPONDENT DETAILS:
+Bank/NBFC: ${data.bankName}
+${data.loanType ? `Loan Type: ${data.loanType}` : ''}
+Recovery Agent: ${data.agentName || 'Name not disclosed'}
+Harassment Phone Numbers: ${data.harassmentPhone}
+
+NATURE OF HARASSMENT:
+${harassmentList}
+
+INCIDENT DETAILS:
+${data.description}
+
+${data.incidentDate ? `Most Recent Incident Date: ${new Date(data.incidentDate).toLocaleDateString('en-IN')}` : ''}
+
+Priority Level: ${data.priority}
+
+${data.evidence ? `EVIDENCE AVAILABLE:
+${data.evidence}` : ''}
+
+${data.witnesses ? `WITNESSES:
+${data.witnesses}` : ''}
+
+${data.previousComplaints ? `PREVIOUS COMPLAINTS:
+${data.previousComplaints}` : ''}
+
+LEGAL VIOLATIONS:
+The above-mentioned actions constitute violations of:
+${legalSections}
+
+RELIEF SOUGHT:
+1. Immediate cessation of all harassment activities
+2. Strict action against the recovery agents involved
+3. Compensation for mental harassment and defamation
+4. Compliance with RBI Fair Practices Code
+5. Written apology from the bank
+6. Assurance of professional conduct in future communications
+
+${data.additionalInfo ? `ADDITIONAL INFORMATION:
+${data.additionalInfo}` : ''}
+
+I request you to investigate this matter urgently and take appropriate action against the bank and their recovery agents. I am ready to provide additional evidence and appear for any inquiry if required.
+
+I look forward to your prompt action in this matter.
+
+Thanking you,
+
+${data.fullName}
+Phone: ${data.countryCode} ${data.yourPhone}
+Email: ${data.email}
+Date: ${date}
+
+Attachments: [List any documents you plan to attach]
+
+---
+IMPORTANT NEXT STEPS:
+1. File this complaint with RBI Ombudsman (cms.rbi.org.in)
+2. Send a copy to your bank's Grievance Cell
+3. For severe harassment, file police complaint under IPC 503/506
+4. Keep all evidence safe and make copies
+5. Follow up after 15 days if no response
+
+This complaint is generated for legal use and contains proper references to applicable laws and regulations.`;
+        }
+
+        function getLegalSections(harassmentTypes) {
+            let sections = [
+                '• RBI Fair Practices Code for Lenders',
+                '• RBI Digital Lending Guidelines 2022',
+                '• Consumer Protection Act 2019'
+            ];
+
+            if (harassmentTypes.includes('Abusive Language') || harassmentTypes.includes('Physical Threats')) {
+                sections.push('• IPC Section 503 - Criminal Intimidation');
+                sections.push('• IPC Section 506 - Punishment for Criminal Intimidation');
+            }
+
+            if (harassmentTypes.includes('Family Contact') || harassmentTypes.includes('Workplace Contact')) {
+                sections.push('• Right to Privacy under Article 21 of Indian Constitution');
+            }
+
+            if (harassmentTypes.includes('Public Shaming')) {
+                sections.push('• IPC Section 499 - Defamation');
+            }
+
+            return sections.join('\n');
+        }
+
+        function copyComplaint() {
+            navigator.clipboard.writeText(generatedComplaintText).then(function() {
+                showSuccessMessage('Complaint copied to clipboard successfully!');
+            });
+        }
+
+        function downloadComplaint() {
+            const element = document.createElement('a');
+            const file = new Blob([generatedComplaintText], {type: 'text/plain'});
+            element.href = URL.createObjectURL(file);
+            element.download = `Harassment_Complaint_${Date.now()}.txt`;
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+            showSuccessMessage('Complaint downloaded successfully!');
+        }
+
+        function emailComplaint() {
+            const subject = 'Legal Review Request - Harassment Complaint';
+            const body = `Please find my harassment complaint below for legal review:\n\n${generatedComplaintText}`;
+            const mailtoUrl = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.open(mailtoUrl);
+            showSuccessMessage('Email client opened with complaint!');
+        }
+
+        function resetForm() {
+            document.getElementById('complaintForm').reset();
+            document.getElementById('generatedComplaint').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+
+        function showSuccessMessage(message) {
+            const successMsg = document.getElementById('successMessage');
+            successMsg.innerHTML = `<strong>✅ Success!</strong> ${message}`;
+            successMsg.style.display = 'block';
+            setTimeout(() => {
+                successMsg.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
