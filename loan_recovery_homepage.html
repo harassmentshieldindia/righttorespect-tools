@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Right to Respect - Loan Recovery Harassment Help</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .tool-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .tool-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .tool-card h3 {
+            color: #4a5568;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tool-card p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .tool-link {
+            display: inline-block;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .tool-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .icon {
+            font-size: 1.5rem;
+        }
+
+        .emergency-section {
+            background: rgba(220, 38, 38, 0.1);
+            border: 2px solid rgba(220, 38, 38, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .emergency-section h2 {
+            color: #dc2626;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .emergency-section p {
+            color: #7f1d1d;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .emergency-link {
+            background: #dc2626;
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-weight: 700;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+        }
+
+        .emergency-link:hover {
+            background: #b91c1c;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
+        }
+
+        .legal-section {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .legal-section h2 {
+            color: #374151;
+            margin-bottom: 20px;
+            font-size: 1.6rem;
+        }
+
+        .legal-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .legal-link {
+            background: #f3f4f6;
+            color: #374151;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid #e5e7eb;
+        }
+
+        .legal-link:hover {
+            background: #e5e7eb;
+            transform: translateY(-1px);
+        }
+
+        .footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🛡️ Right to Respect</h1>
+            <p>Empowering victims of loan recovery harassment with tools, resources, and legal guidance to protect their rights and dignity.</p>
+        </header>
+
+        <section class="emergency-section">
+            <h2>🚨 Emergency Contacts</h2>
+            <p>If you are facing immediate harassment, threats, or abuse, get help right away.</p>
+            <a href="emergency_contacts_fixed (1).html" class="emergency-link">Get Emergency Help Now</a>
+        </section>
+
+        <div class="tools-grid">
+            <div class="tool-card">
+                <h3><span class="icon">📋</span>Complaint Generator</h3>
+                <p>Generate formal complaints against harassment by loan recovery agencies. Create professional, legally sound complaints to submit to authorities, banks, and regulatory bodies.</p>
+                <a href="complaint-generator.html" class="tool-link">Create Complaint</a>
+            </div>
+
+
+
+            <div class="tool-card">
+                <h3><span class="icon">📊</span>Incident Report Generator</h3>
+                <p>Document harassment incidents with detailed reports. Create comprehensive records of abusive behavior, threats, and violations for legal proceedings.</p>
+                <a href="incident_report_generator (1).html" class="tool-link">Report Incident</a>
+            </div>
+
+            <div class="tool-card">
+                <h3><span class="icon">❓</span>FAQ & Rights Information</h3>
+                <p>Learn about your rights when dealing with loan recovery agencies. Get answers to frequently asked questions about legal protections and proper procedures.</p>
+                <a href="faq_section_widget 1.html" class="tool-link">Know Your Rights</a>
+            </div>
+
+            <div class="tool-card">
+                <h3><span class="icon">📧</span>Email Rights Template</h3>
+                <p>Send professional emails asserting your rights to recovery agencies. Use pre-drafted templates to communicate boundaries and legal requirements clearly.</p>
+                <a href="email_rights_premium (1).html" class="tool-link">Send Email</a>
+            </div>
+
+            <div class="tool-card">
+                <h3><span class="icon">🔄</span>Rights Reminder Tool</h3>
+                <p>Get regular reminders about your rights and important actions to take. Stay informed about legal deadlines and protective measures.</p>
+                <a href="righttorespect_revised.html" class="tool-link">Set Reminders</a>
+            </div>
+        </div>
+
+        <section class="legal-section">
+            <h2>📜 Legal Information & Policies</h2>
+            <div class="legal-links">
+                <a href="terms_of_service.html" class="legal-link">Terms of Service</a>
+                <a href="privacy_policy.html" class="legal-link">Privacy Policy</a>
+                <a href="disclaimer.html" class="legal-link">Legal Disclaimer</a>
+                <a href="cookie_policy (1).html" class="legal-link">Cookie Policy</a>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>© 2025 Right to Respect Tools. This website provides information and tools to help victims of loan recovery harassment. Always consult with qualified legal professionals for specific legal advice.</p>
+            <p style="margin-top: 10px; font-size: 0.8rem;">🤝 Together we can stop harassment and protect dignity</p>
+        </footer>
+    </div>
+
+    <script>
+        // Add smooth scrolling and enhanced interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add loading animation
+            const cards = document.querySelectorAll('.tool-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+
+            // Add click tracking for tools (for analytics)
+            const toolLinks = document.querySelectorAll('.tool-link, .emergency-link');
+            toolLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    console.log('Tool accessed:', this.textContent.trim());
+                });
+            });
+
+            // Add helpful tooltips on hover
+            const toolCards = document.querySelectorAll('.tool-card');
+            toolCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
