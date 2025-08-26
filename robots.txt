@@ -1,0 +1,25 @@
+# Robots.txt for righttorespect.info
+User-agent: *
+Allow: /
+
+# Block access to admin areas
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-content/plugins/
+Disallow: /wp-content/themes/
+
+# Block access to sensitive files
+Disallow: /cgi-bin/
+Disallow: /tmp/
+Disallow: /logs/
+
+# Allow access to CSS and JS for better crawling
+Allow: /wp-content/uploads/
+Allow: *.css
+Allow: *.js
+
+# Sitemap location
+Sitemap: https://righttorespect.info/sitemap.xml
+
+# Crawl-delay (optional - adjust as needed)
+Crawl-delay: 1
